@@ -1,0 +1,17 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: 01_loading_data
+  Author: Jeff Leek
+  Type: Standard
+  Organization: JHU Biostats
+  Version: 2.4.2
+
+# Jeff - keep this question at the end
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
+
