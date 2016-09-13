@@ -113,7 +113,7 @@
 - Class: cmd_question
   Output: Another way to read this file is with the "readr" package. Load that package now.
   CorrectAnswer: library(readr)
-  AnswerTests: omnitest(correctExpr='library(readr')
+  AnswerTests: omnitest(correctExpr='library(readr)')
   Hint: Try library(readr)
 
 - Class: cmd_question
