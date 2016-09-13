@@ -65,20 +65,20 @@
 
 
 - Class: cmd_question
-  Output: Ok lets now try downloading the data. Use the "download" command to download the data. You will need
-      to pass the url and a destination file. Save the file to file.path('data','cameras.csv').
-  CorrectAnswer: download(file_url,destfile=file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path('data','cameras.csv'))')
+  Output: Ok lets now try downloading the data. Use the download command to download the data. You will need
+      to pass the url and a destination file. Save the file to file.path("data","cameras.csv").
+  CorrectAnswer: download(file_url,destfile=file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path("data","cameras.csv"))')
   Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
 
 - Class: cmd_question
   Output: Unfortunately this website (like many) has the data table embedded in the html. You can read in the first few
-      lines of the file you downloaded and check this. Try using the command "readLines", which
+      lines of the file you downloaded and check this. Try using the command readLines, which
       scans the file and reads the text into a vector, element per line. Assign this variable
-      to the name "cameras"
-  CorrectAnswer: cameras <- readLines(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='cameras <- readLines(file.path('data','cameras.csv'))')
-  Hint: Try cameras <- readLines(file.path('data','cameras.csv'))
+      to the name cameras.
+  CorrectAnswer: cameras <- readLines(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras <- readLines(file.path("data","cameras.csv"))')
+  Hint: Try cameras <- readLines(file.path('data',"cameras.csv"))
 
 - Class: cmd_question
   Output: Look at only the top few elements of the "cameras" variable with the command
@@ -98,17 +98,17 @@
   Hint: Try file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
 
 - Class: cmd_question
-  Output: Ok lets now try downloading the data again. Use the "download" command to download the data. You will need
-      to pass the url and a destination file. Save the file to "file.path('data','cameras.csv')".
-  CorrectAnswer: download(file_url,destfile=file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr="download(file_url,destfile=file.path('data','cameras.csv'))")
+  Output: Ok lets now try downloading the data again. Use the download command to download the data. You will need
+      to pass the url and a destination file. Save the file to file.path("data","cameras.csv").
+  CorrectAnswer: download(file_url,destfile=file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path("data","cameras.csv"))')
   Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
 
 - Class: cmd_question
   Output: We can read the data into R using the read.csv command. Try this now and assign the output to the "cameras" variable.
-  CorrectAnswer: cameras <- read.csv(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr="cameras <- read.csv(file.path('data','cameras.csv'))")
-  Hint: Try cameras <- read.csv(file.path('data','cameras.csv'))
+  CorrectAnswer: cameras <- read.csv(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras <- read.csv(file.path("data","cameras.csv"))')
+  Hint: Try cameras <- read.csv(file.path("data","cameras.csv"))
 
 - Class: cmd_question
   Output: Another way to read this file is with the "readr" package. Load that package now.
@@ -118,9 +118,9 @@
 
 - Class: cmd_question
   Output: We can read the data into R using the read_csv command. Try this now and assign the output to the "cameras_readr" variable.
-  CorrectAnswer: cameras_readr <- read_csv(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr="cameras_readr <- read_csv(file.path('data','cameras.csv'))")
-  Hint: Try cameras_readr <- read_csv(file.path('data','cameras.csv'))
+  CorrectAnswer: cameras_readr <- read_csv(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras_readr <- read_csv(file.path("data","cameras.csv"))')
+  Hint: Try cameras_readr <- read_csv(file.path("data","cameras.csv"))
 
 - Class: cmd_question
   Output: readr is faster than base (although it won't be much for this small example). But it does a couple
@@ -131,7 +131,7 @@
   Hint: Try str(cameras_readr)
 
 - Class: cmd_question
-  Output: For comparison try running the "str" command on the "cameras" variable and note that all the strings are stored as factors.
+  Output: For comparison try running the str command on the cameras variable and note that all the strings are stored as factors.
   CorrectAnswer: str(cameras)
   AnswerTests: omnitest(correctExpr='str(cameras)')
   Hint: Try str(cameras)
@@ -143,14 +143,14 @@
   Hint: Try library(data.table)
   
 - Class: cmd_question
-  Output: You can use the "fread" command to load the data set in and assign it to the variable "cameras_fread"
-  CorrectAnswer: cameras_fread <- fread(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr="cameras_fread <- fread(file.path('data','cameras.csv'))")
-  Hint: Try cameras_fread <- fread(file.path('data','cameras.csv'))
+  Output: You can use the fread command to load the data set in and assign it to the variable "cameras_fread"
+  CorrectAnswer: cameras_fread <- fread(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras_fread <- fread(file.path("data","cameras.csv"))')
+  Hint: Try cameras_fread <- fread(file.path("data","cameras.csv"))
 
 - Class: cmd_question
-  Output: This object is now a "data.table" object which works a little differently than we are used to. For example try
-      looking at the first column of "cameras_fread" using the command "cameras_fread[,1]"
+  Output: This object is now a data.table object which works a little differently than we are used to. For example try
+      looking at the first column of cameras_fread using the command cameras_fread[,1]
   CorrectAnswer: cameras_fread[,1]
   AnswerTests: omnitest(correctExpr='cameras_fread[,1]')
   Hint: Try cameras_fread[,1]
@@ -190,7 +190,7 @@
     in each sheet.
     
 - Class: cmd_question
-  Output: You can read the data into R using the "read_excel" command in the "readxl" package. Let's just use the
+  Output: You can read the data into R using the read_excel command in the readxl package. Let's just use the
       data from the 5th sheet on final QC. To do this, pass the file path and the sheet number to "read_excel". You
       can also do this by sheet name, but I find using the number is usually easier. Assign the result to the variable "final_qc".
   CorrectAnswer: final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5)
@@ -209,7 +209,7 @@
   
 - Class: cmd_question
   Output: The top line is causing problems with the reading of this sheet. We can skip this line by using 
-    the parameter "skip" and telling it the number of lines to skip. 
+    the parameter skip and telling it the number of lines to skip. 
   CorrectAnswer: final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
   AnswerTests: omnitest(correctExpr='final_qc <- read_excel(file.path("data","genomes.xlsx"),skip=1)')
   Hint: Try final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
