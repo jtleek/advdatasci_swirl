@@ -75,10 +75,10 @@
   Output: Unfortunately this website (like many) has the data table embedded in the html. You can read in the first few
       lines of the file you downloaded and check this. Try using the command readLines, which
       scans the file and reads the text into a vector, element per line. Assign this variable
-      to the name cameras.
+      to the name cameras. Make sure you read the file from the "data" directory. 
   CorrectAnswer: cameras <- readLines(file.path("data","cameras.csv"))
   AnswerTests: omnitest(correctExpr='cameras <- readLines(file.path("data","cameras.csv"))')
-  Hint: Try cameras <- readLines(file.path('data',"cameras.csv"))
+  Hint: Try cameras <- readLines(file.path("data","cameras.csv"))
 
 - Class: cmd_question
   Output: Look at only the top few elements of the "cameras" variable with the command
@@ -91,11 +91,11 @@
 - Class: cmd_question
   Output: It turns out that we need to use the API to get at the actual csv
       file. We will be learning about that in a future lesson. For the moment
-      this just means we need to use a different url dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0.
+      this just means we need to use a different url http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0.
       Assign this value to the variable file_url
-  CorrectAnswer: file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
-  AnswerTests: omnitest(correctExpr='file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"')
-  Hint: Try file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
+  CorrectAnswer: file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
+  AnswerTests: omnitest(correctExpr='file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"')
+  Hint: Try file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
 
 - Class: cmd_question
   Output: Ok lets now try downloading the data again. Use the download command to download the data. You will need
