@@ -69,7 +69,7 @@
       to pass the url and a destination file. Save the file to file.path("data","cameras.csv").
   CorrectAnswer: download(file_url,destfile=file.path("data","cameras.csv"))
   AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path("data","cameras.csv"))')
-  Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
+  Hint: Try download(file_url,destfile=file.path("data","cameras.csv"))
 
 - Class: cmd_question
   Output: Unfortunately this website (like many) has the data table embedded in the html. You can read in the first few
