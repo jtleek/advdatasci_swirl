@@ -75,7 +75,7 @@
   Output: Unfortunately this website (like many) has the data table embedded in the html. You can read in the first few
       lines of the file you downloaded and check this. Try using the command readLines, which
       scans the file and reads the text into a vector, element per line. Assign this variable
-      to the name cameras. Make sure you read the file from the "data" directory. 
+      to the name cameras. Make sure you read the file from the "data" directory using file.path("data","cameras.csv"). 
   CorrectAnswer: cameras <- readLines(file.path("data","cameras.csv"))
   AnswerTests: omnitest(correctExpr='cameras <- readLines(file.path("data","cameras.csv"))')
   Hint: Try cameras <- readLines(file.path("data","cameras.csv"))
