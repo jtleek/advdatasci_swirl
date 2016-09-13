@@ -57,16 +57,16 @@
 
 - Class: cmd_question
   Output: When downloading a file from the internet, to ensure reproducibility
-    you should record the time you downloaded the file. Use the "now" command
-    and assign the output to the variable "data_downloaded"
+    you should record the time you downloaded the file. Use the now() command
+    and assign the output to the variable date_downloaded
   CorrectAnswer: date_downloaded <- now()
   AnswerTests: omnitest(correctExpr='date_downloaded <- now()')
-  Hint: date_downloaded <- now()
+  Hint: Try date_downloaded <- now()
 
 
 - Class: cmd_question
   Output: Ok lets now try downloading the data. Use the "download" command to download the data. You will need
-      to pass the url and a destination file. Save the file to "file.path('data','cameras.csv')".
+      to pass the url and a destination file. Save the file to file.path('data','cameras.csv').
   CorrectAnswer: download(file_url,destfile=file.path('data','cameras.csv'))
   AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path('data','cameras.csv'))')
   Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
@@ -82,7 +82,7 @@
 
 - Class: cmd_question
   Output: Look at only the top few elements of the "cameras" variable with the command
-      "head" and notice that it is an HTML file
+      head and notice that it is an HTML file
   CorrectAnswer: head(cameras)
   AnswerTests: omnitest(correctExpr='head(cameras)')
   Hint: Try head(cameras)
@@ -91,8 +91,8 @@
 - Class: cmd_question
   Output: It turns out that we need to use the API to get at the actual csv
       file. We will be learning about that in a future lesson. For the moment
-      this just means we need to use a different url "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0".
-      Assign this value to the variable "file_url"
+      this just means we need to use a different url dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0.
+      Assign this value to the variable file_url
   CorrectAnswer: file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
   AnswerTests: omnitest(correctExpr='file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"')
   Hint: Try file_url <- "dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
@@ -101,13 +101,13 @@
   Output: Ok lets now try downloading the data again. Use the "download" command to download the data. You will need
       to pass the url and a destination file. Save the file to "file.path('data','cameras.csv')".
   CorrectAnswer: download(file_url,destfile=file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path('data','cameras.csv'))')
+  AnswerTests: omnitest(correctExpr="download(file_url,destfile=file.path('data','cameras.csv'))")
   Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
 
 - Class: cmd_question
   Output: We can read the data into R using the read.csv command. Try this now and assign the output to the "cameras" variable.
   CorrectAnswer: cameras <- read.csv(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='cameras <- read.csv(file.path('data','cameras.csv'))')
+  AnswerTests: omnitest(correctExpr="cameras <- read.csv(file.path('data','cameras.csv'))")
   Hint: Try cameras <- read.csv(file.path('data','cameras.csv'))
 
 - Class: cmd_question
@@ -119,7 +119,7 @@
 - Class: cmd_question
   Output: We can read the data into R using the read_csv command. Try this now and assign the output to the "cameras_readr" variable.
   CorrectAnswer: cameras_readr <- read_csv(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='cameras_readr <- read_csv(file.path('data','cameras.csv'))')
+  AnswerTests: omnitest(correctExpr="cameras_readr <- read_csv(file.path('data','cameras.csv'))")
   Hint: Try cameras_readr <- read_csv(file.path('data','cameras.csv'))
 
 - Class: cmd_question
@@ -145,7 +145,7 @@
 - Class: cmd_question
   Output: You can use the "fread" command to load the data set in and assign it to the variable "cameras_fread"
   CorrectAnswer: cameras_fread <- fread(file.path('data','cameras.csv'))
-  AnswerTests: omnitest(correctExpr='cameras_fread <- fread(file.path('data','cameras.csv'))')
+  AnswerTests: omnitest(correctExpr="cameras_fread <- fread(file.path('data','cameras.csv'))")
   Hint: Try cameras_fread <- fread(file.path('data','cameras.csv'))
 
 - Class: cmd_question
