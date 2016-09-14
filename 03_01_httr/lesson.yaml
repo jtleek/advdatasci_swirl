@@ -1,0 +1,34 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: 03_01_httr
+  Author: John Muschelli
+  Type: Standard
+  Organization: JHU Biostatistics and DSL
+  Version: 2.4.2.3
+
+- Class: text
+  Output: Welcome to working with httr!  
+        We will be discussing how to use the httr package to interface with webpages
+        and scrape some data.  
+
+- Class: cmd_question
+  Output: Let's load in the httr package (it's already loaded) but keep 
+        in the habit of loading in packages using the library command.
+  CorrectAnswer: library(httr)
+  AnswerTests: omnitest(correctExpr='library(httr)')
+  Hint: Type library(httr)
+
+- Class: cmd_question
+  Output: Now that we have the question loaded, let's look at the help of 
+        some of "VERBS".  In this example, let's see the help of GET
+  CorrectAnswer: ?GET
+  AnswerTests: omnitest(correctExpr='?GET')
+  Hint: Type ?GET
+
+- Class: mult_question
+  Output: The GET function retrieves information from a website.  
+        What seems like a VERB that adds/uploads information on a website:
+  AnswerChoices: POST;DELETE;HEAD;PATCH
+  CorrectAnswer: POST
+  AnswerTests: omnitest(correctVal='POST')
+  Hint: 
