@@ -172,11 +172,11 @@
 
 - Class: cmd_question
   Output: Let's download an excel spreadsheet to play with. Use the download command and save this file
-      "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_info/20130606_sample_info.xlsx" to a file
+      "http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0" to a file
       called "genomes.xlsx" in your "data" folder.
-  CorrectAnswer: download("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_info/20130606_sample_info.xlsx",file.path("data","genomes.xlsx"))
-  AnswerTests: omnitest(correctExpr='download("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_info/20130606_sample_info.xlsx",file.path("data","genomes.xlsx"))')
-  Hint: Try download("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_info/20130606_sample_info.xlsx",file.path("data","genomes.xlsx"))
+  CorrectAnswer: download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))
+  AnswerTests: omnitest(correctExpr='download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))')
+  Hint: Try download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))
   
 
 - Class: cmd_question
@@ -211,7 +211,7 @@
   Output: The top line is causing problems with the reading of this sheet. We can skip this line by using 
     the parameter skip and telling it the number of lines to skip. 
   CorrectAnswer: final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
-  AnswerTests: omnitest(correctExpr='final_qc <- read_excel(file.path("data","genomes.xlsx"),skip=1)')
+  AnswerTests: omnitest(correctExpr='final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)')
   Hint: Try final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
 
 - Class: cmd_question
