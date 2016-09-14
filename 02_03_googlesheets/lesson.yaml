@@ -1,0 +1,267 @@
+- Class: meta
+  Course: advdatasci swirl
+  Lesson: 02 03 googlesheets
+  Author: Detian Deng
+  Type: Standard
+  Organization: JHU Biostat
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome to the googlesheets lesson. The googlesheets package serves as 
+      a Google Sheets R API that lets you access and manage Google spreadsheets 
+      from R. 
+    
+
+- Class: text
+  Output: The current swirl lesson is very much derived from the package
+      vignettes, which can be found here
+      "https://cran.r-project.org/web/packages/googlesheets/README.html"
+      Now, let's begin our lesson.
+
+- Class: cmd_question
+  Output: First, to install googlesheets, simply use command
+      install.packages("googlesheets")
+  CorrectAnswer: install.packages("googlesheets")
+  AnswerTests: omnitest(correctExpr='install.packages("googlesheets")')
+  Hint: Try install.packages("googlesheets")
+
+- Class: cmd_question
+  Output: Now we load the googlesheets package.
+  CorrectAnswer: library(googlesheets)
+  AnswerTests: omnitest(correctExpr='library(googlesheets)')
+  Hint: library(googlesheets)
+
+- Class: cmd_question
+  Output: We also need to load the dplyr package, from which we use the %>% pipe
+      operator, among other things. googlesheets usage does not require you to 
+      use %>% though it was certainly designed to be pipe-friendly. This 
+      vignette uses pipes but you will find that all the examples in the help 
+      files use base R only.
+  CorrectAnswer: library(dplyr)
+  AnswerTests: omnitest(correctExpr='library(dplyr)')
+  Hint: Try library(dplyr)
+
+- Class: text
+  Output: List your Google Sheets
+      The gs_ls() function returns a data frame of the sheets you would see in 
+      your Google Sheets home screen.
+      "https://docs.google.com/spreadsheets/."
+      This should include sheets that you own and may also show sheets owned by 
+      others but that you are permitted to access, if you have visited the sheet
+      in the browser. Expect a prompt to authenticate yourself in the browser at
+      this point.
+
+- Class: cmd_question
+  Output: Use gs_ls() to list your Google spreadsheets and assign it to a 
+      variable named my_sheets.
+  CorrectAnswer: my_sheets <- gs_ls()
+  AnswerTests: omnitest(correctExpr='my_sheets <- gs_ls()')
+  Hint: my_sheets <- gs_ls()
+
+- Class: text
+  Output: Get a Google Sheet to practice with
+      Don’t worry if you don’t have any suitable Google Sheets lying around!
+      The author published a sheet for you to practice with and have built 
+      functions into googlesheets to help you access it. The example sheet holds
+      some of the Gapminder data. Feel free to visit the Sheet in the browser.
+      "https://w3id.org/people/jennybc/googlesheets_gap_url"
+
+- Class: cmd_question
+  Output: The code below will put a copy of this sheet into your Drive, titled 
+      “Gapminder”. Have a try.
+      gs_gap() %>% gs_copy(to = "Gapminder")
+  CorrectAnswer: gs_gap() %>% gs_copy(to = "Gapminder")
+  AnswerTests: omnitest(correctExpr='gs_gap() %>% gs_copy(to = "Gapminder")')
+  Hint: Type gs_gap() %>% gs_copy(to = "Gapminder")
+
+- Class: text
+  Output: If that seems to have worked, go check for a sheet named “Gapminder” in your 
+      Google Sheets home screen. "https://docs.google.com/spreadsheets/"
+      You can also call gs_ls() again to see if the Gapminder sheet appears. 
+      Give it a regular expression to narrow the listing down, if you like.
+
+- Class: cmd_question
+  Output: For example, try gs_ls("Gapminder")
+  CorrectAnswer: gs_ls("Gapminder")
+  AnswerTests: omnitest(correctExpr='gs_ls("Gapminder")')
+  Hint: Try gs_ls("Gapminder")
+
+- Class: text
+  Output: Register a Sheet
+      If you plan to consume data from a sheet or edit it, you must first 
+      register it. This is how googlesheets records important info about the 
+      sheet that is required downstream by the Google Sheets or Google Drive 
+      APIs. Once registered, you can print the result to get some basic info 
+      about the sheet.
+
+- Class: cmd_question
+  Output: googlesheets provides several registration functions. 
+      Specifying the sheet by title? Use gs_title(). 
+      By key? Use gs_key(). 
+      Let's try register by title first and assign it to a variable named gap.
+  CorrectAnswer: gap <- gs_title("Gapminder")
+  AnswerTests: omnitest(correctExpr='gap <- gs_title("Gapminder")')
+  Hint: Try gap <- gs_title("Gapminder")
+
+- Class: cmd_question
+  Output: Now print it to see what you got.
+  CorrectAnswer: gap
+  AnswerTests: omnitest(correctExpr='gap')
+  Hint: Try gap
+
+- Class: text
+  Output: Need to access a sheet you do not own? You can access it by key if you know it.
+      We’re using the built-in functions gs_gap_key() and gs_gap_url() to 
+      produce the key and browser URL for the Gapminder example sheet, so you 
+      can see how this will play out with your own projects.
+
+- Class: cmd_question
+  Output: Use gs_gap_key() to get the key and assign it to GAP_KEY.
+  CorrectAnswer: GAP_KEY <- gs_gap_key()
+  AnswerTests: omnitest(correctExpr='GAP_KEY <- gs_gap_key()')
+  Hint: Try GAP_KEY <- gs_gap_key()
+
+- Class: cmd_question
+  Output: Register the spreadsheet by the key you just got and assign it to 
+      third_party_gap
+  CorrectAnswer: third_party_gap <- GAP_KEY %>% gs_key()
+  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_KEY %>% gs_key()')
+  Hint: Try third_party_gap <- GAP_KEY %>% gs_key()
+
+- Class: cmd_question
+  Output: You can also register by url.
+      Use gs_gap_url() to get the url first and assign it to GAP_URL.
+  CorrectAnswer: GAP_URL <- gs_gap_url()
+  AnswerTests: omnitest(correctExpr='GAP_URL <- gs_gap_url()')
+  Hint: GAP_URL <- gs_gap_url()
+
+- Class: cmd_question
+  Output: Then use gs_url() to register and assign it to third_party_gap.
+  CorrectAnswer: third_party_gap <- GAP_URL %>% gs_url()
+  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_URL %>% gs_url()')
+  Hint: third_party_gap <- GAP_URL %>% gs_url()
+
+- Class: cmd_question
+  Output: Registration by key is the safest, try extract_key_from_url(GAP_URL) to get the
+      key. Registering by key is a better idea in the long-run.
+  CorrectAnswer: extract_key_from_url(GAP_URL)
+  AnswerTests: omnitest(correctExpr='extract_key_from_url(GAP_URL)')
+  Hint: extract_key_from_url(GAP_URL)
+
+- Class: cmd_question
+  Output: Worried that a spreadsheet's registration is out-of-date?
+     You can re-register it by gap <- gap %>% gs_gs().
+  CorrectAnswer: gap <- gap %>% gs_gs()
+  AnswerTests: omnitest(correctExpr='gap <- gap %>% gs_gs()')
+  Hint: gap <- gap %>% gs_gs()
+
+- Class: text
+  Output: The registration functions gs_title(), gs_key(), gs_url(), and gs_gs() return a
+      registered sheet as a googlesheet object, which is the first argument to 
+      practically every function in this package. Likewise, almost every 
+      function returns a freshly registered googlesheet object, ready to be 
+      stored or piped into the next command.
+
+- Class: cmd_question
+  Output: You can use gs_browse() to visit the Sheet corresponding to a registered
+      googlesheet in your browser. 
+  CorrectAnswer: gap %>% gs_browse()
+  AnswerTests: omnitest(correctExpr='gap %>% gs_browse()')
+  Hint: gap %>% gs_browse()
+
+- Class: text
+  Output: Inspect a Sheet
+      Once you’ve registered a Sheet, you can print it to get an overview of, 
+      e.g., its worksheets, their names, and dimensions. 
+      In addition, you can use gs_ws_ls() to get worksheet names as a character
+      vector.
+
+- Class: cmd_question
+  Output: Read all the data in one worksheet
+      gs_read() returns the contents of a worksheet as a data frame. Use the 
+      argument ws to specify the worksheet of interest. Let's take a look at the
+      worksheet "Oceania". (assign it to oceania)
+  CorrectAnswer: oceania <- gap %>% gs_read(ws = "Oceania")
+  AnswerTests: omnitest(correctExpr='oceania <- gap %>% gs_read(ws = "Oceania")')
+  Hint: oceania <- gap %>% gs_read(ws = "Oceania")
+
+- Class: cmd_question
+  Output: Now print oceania.
+  CorrectAnswer: oceania
+  AnswerTests: omnitest(correctExpr='oceania')
+  Hint: oceania
+
+- Class: text
+  Output: Read only certain cells
+      You can target specific cells via the range argument. The simplest usage 
+      is to specify an Excel-like cell range, such as range = “D12:F15” or 
+      range = “R1C12:R6C15”. The cell rectangle can be specified in various 
+      other ways, using helper functions. It can be degenerate, i.e. open-ended.
+
+- Class: cmd_question
+  Output: Let's see the worksheep 2 with range "A1:D8".
+  CorrectAnswer: gap %>% gs_read(ws = 2, range = "A1:D8")
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = 2, range = "A1:D8")')
+  Hint: gap %>% gs_read(ws = 2, range = "A1:D8")
+
+- Class: cmd_question
+  Output: Let's see the worksheep "Europe" with range cell_rows(1:4).
+  CorrectAnswer: gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))')
+  Hint: gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))
+
+- Class: cmd_question
+  Output: Let's see the worksheep "Asia" with range cell_limits(c(1, 4), c(5, NA)).
+  CorrectAnswer: gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))')
+  Hint: gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))
+
+- Class: text
+  Output: Create a new Google Sheet
+      You can use gs_new() to create a new Sheet de novo and populate it with a 
+      bit of the iris data.
+      And gs_read() is a wrapper that bundles together the most common methods 
+      to read data from the API and transform it for downstream use.
+
+- Class: cmd_question
+  Output: Create a new Google sheet by
+      boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+  CorrectAnswer: boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+  AnswerTests: omnitest(correctExpr='boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)')
+  Hint: boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+
+- Class: cmd_question
+  Output: Access the newly created worksheet by pass it to gs_read().
+  CorrectAnswer: boring_ss %>% gs_read()
+  AnswerTests: omnitest(correctExpr='boring_ss %>% gs_read()')
+  Hint: boring_ss %>% gs_read()
+
+- Class: text
+  Output: Note how we store the returned value from gs_new() (and all other sheet editing 
+      functions). That’s because the registration info changes whenever we edit 
+      the sheet and we re-register it inside these functions, so this idiom will
+      help you make sequential edits and queries to the same sheet. 
+      You can copy an entire Sheet with gs_copy() and rename one with 
+      gs_rename().
+
+- Class: cmd_question
+  Output: Use gs_ws_new() to add some mtcars data as a second worksheet to boring_ss.
+      boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+  CorrectAnswer: boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+  AnswerTests: omnitest(correctExpr='boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)')
+  Hint: boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+
+- Class: cmd_question
+  Output: Access this new worksheet by gs_read() with ws = 2.
+  CorrectAnswer: boring_ss %>% gs_read(ws = 2)
+  AnswerTests: omnitest(correctExpr='boring_ss %>% gs_read(ws = 2)')
+  Hint: boring_ss %>% gs_read(ws = 2)
+
+- Class: cmd_question
+  Output: We use gs_ws_delete() and gs_ws_rename() to delete the mtcars worksheet and 
+      rename the iris worksheets, respectively. Let's delete the second 
+      worksheet in boring_ss and rename the remaining worksheet to "iris".
+      Note that these functions can be piped together.
+  CorrectAnswer: boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")
+  AnswerTests: omnitest(correctExpr='boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")')
+  Hint: boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")
