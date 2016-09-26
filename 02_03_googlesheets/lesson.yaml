@@ -116,6 +116,19 @@
       can see how this will play out with your own projects.
 
 - Class: cmd_question
+  Output: Let's try register by url first.
+      Use gs_gap_url() to get the url first and assign it to GAP_URL.
+  CorrectAnswer: GAP_URL <- gs_gap_url()
+  AnswerTests: omnitest(correctExpr='GAP_URL <- gs_gap_url()')
+  Hint: GAP_URL <- gs_gap_url()
+
+- Class: cmd_question
+  Output: Then use gs_url() to register and assign it to third_party_gap.
+  CorrectAnswer: third_party_gap <- GAP_URL %>% gs_url()
+  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_URL %>% gs_url()')
+  Hint: third_party_gap <- GAP_URL %>% gs_url()
+  
+- Class: cmd_question
   Output: Use gs_gap_key() to get the key and assign it to GAP_KEY.
   CorrectAnswer: GAP_KEY <- gs_gap_key()
   AnswerTests: omnitest(correctExpr='GAP_KEY <- gs_gap_key()')
@@ -127,20 +140,7 @@
   CorrectAnswer: third_party_gap <- GAP_KEY %>% gs_key()
   AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_KEY %>% gs_key()')
   Hint: Try third_party_gap <- GAP_KEY %>% gs_key()
-
-- Class: cmd_question
-  Output: You can also register by url.
-      Use gs_gap_url() to get the url first and assign it to GAP_URL.
-  CorrectAnswer: GAP_URL <- gs_gap_url()
-  AnswerTests: omnitest(correctExpr='GAP_URL <- gs_gap_url()')
-  Hint: GAP_URL <- gs_gap_url()
-
-- Class: cmd_question
-  Output: Then use gs_url() to register and assign it to third_party_gap.
-  CorrectAnswer: third_party_gap <- GAP_URL %>% gs_url()
-  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_URL %>% gs_url()')
-  Hint: third_party_gap <- GAP_URL %>% gs_url()
-
+  
 - Class: cmd_question
   Output: Registration by key is the safest, try extract_key_from_url(GAP_URL) to get the
       key. Registering by key is a better idea in the long-run.
@@ -398,3 +398,11 @@
   Output: Congratulations! You have learned the basics of googlesheets. You can find more 
       comprehensive tutorials on the author's git page.
       "https://github.com/jennybc/googlesheets"
+
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
