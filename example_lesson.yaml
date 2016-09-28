@@ -1,0 +1,26 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: httr_and_rvest_1
+  Author: John Muschelli
+  Type: Standard
+  Organization: JHU Biostatistics and DSL
+  Version: 2.4.2.3
+- Class: cmd_command
+  Output: How do you assign 5 to x
+  AnswerTests: omnitest(correctExpr='x <- 5')
+  CorrectAnswer: x <- 5
+  Hint: x <- 5
+- Class: cmd_command
+  Output: What happens when j = 4
+  AnswerTests: omnitest(correctExpr='j <- 4')
+  CorrectAnswer: j <- 4
+  Hint: j <- 4
+- Class: text
+  Output: This is a message
+- Class: cmd_multiple
+  Output: This is a multiple choice question - first choice is always right one
+  AnswerChoices: 1;2;3;4
+  AnswerTests: omnitest(correctVal=1')
+  CorrectAnswer: 1.0
+  Hint: ''
+
