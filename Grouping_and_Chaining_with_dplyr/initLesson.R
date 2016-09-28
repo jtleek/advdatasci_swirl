@@ -7,7 +7,7 @@
 
 # Make data available to user in a data frame
 .path2csv <- file.path(.get_course_path(),
-                      'Getting_and_Cleaning_Data',
+                      'advdatasci_swirl',
                       'Grouping_and_Chaining_with_dplyr',
                       '2014-07-08.csv.gz')
 mydf <- read.csv(.path2csv, as.is = TRUE)
