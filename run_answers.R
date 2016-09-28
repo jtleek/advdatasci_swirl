@@ -5,6 +5,15 @@ run_answers = function(fol) {
   
   yaml = file.path(fol, "lesson.yaml")
   init = file.path(fol, "initLesson.R")
+  deps = file.path(fol, "dependson.txt")
+  if (file.exists(deps)) {
+    deps = readLines(deps)
+    deps = setdiff(deps, "")
+    deps = paste0("library(", deps, ")")
+    tmpfile = tempfile(fileext = ".R")
+    writeLines(text = deps, tmpfile)
+    source(tmpfile)
+  }
   if (file.exists(init)) {
     source(init)
   }

@@ -3,7 +3,7 @@
 # filepath <- paste0('~/', basename(logurl))
 # download.file(logurl, filepath)
 # cranlog <- read.csv(filepath)
-# write.csv(cranlog, 'Getting_and_Cleaning_Data/Manipulating_Data_with_dplyr/2014-07-08.csv')
+# write.csv(cranlog, 'advdatasci_swirl/Manipulating_Data_with_dplyr/2014-07-08.csv')
 # unlink(filepath)
 
 # For compatibility with 2.2.21
@@ -15,7 +15,7 @@
 
 # Make path to csv available to user
 path2csv <- file.path(.get_course_path(),
-                      'Getting_and_Cleaning_Data',
+                      'advdatasci_swirl',
                       'Manipulating_Data_with_dplyr',
                       '2014-07-08.csv.gz')
 
