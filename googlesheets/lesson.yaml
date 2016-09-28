@@ -1,0 +1,358 @@
+- Class: meta
+  Course: advdatasci swirl
+  Lesson: google_sheets
+  Author: Detian Deng
+  Type: Standard
+  Organization: JHU Biostat
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome to the googlesheets lesson. The googlesheets package serves as 
+      a Google Sheets R API that lets you access and manage Google spreadsheets 
+      from R. 
+    
+
+- Class: text
+  Output: The current swirl lesson is very much derived from the package
+      vignettes, which can be found here
+      "https://cran.r-project.org/web/packages/googlesheets/README.html"
+      Now, let's begin our lesson.
+
+- Class: cmd_question
+  Output: Load the googlesheets package.
+  CorrectAnswer: library(googlesheets)
+  AnswerTests: omnitest(correctExpr='library(googlesheets)')
+  Hint: library(googlesheets)
+
+- Class: cmd_question
+  Output: We also need to load the dplyr package, from which we use the %>% pipe
+      operator, among other things. googlesheets usage does not require you to 
+      use %>% though it was certainly designed to be pipe-friendly. This 
+      vignette uses pipes but you will find that all the examples in the help 
+      files use base R only.
+  CorrectAnswer: library(dplyr)
+  AnswerTests: omnitest(correctExpr='library(dplyr)')
+  Hint: Try library(dplyr)
+
+- Class: text
+  Output: List your Google Sheets
+      The gs_ls() function returns a data frame of the sheets you would see in 
+      your Google Sheets home screen.
+      "https://docs.google.com/spreadsheets/."
+      This should include sheets that you own and may also show sheets owned by 
+      others but that you are permitted to access, if you have visited the sheet
+      in the browser. Expect a prompt to authenticate yourself in the browser at
+      this point.
+
+- Class: cmd_question
+  Output: Use gs_ls() to list your Google spreadsheets and assign it to a 
+      variable named my_sheets.
+  CorrectAnswer: my_sheets <- gs_ls()
+  AnswerTests: omnitest(correctExpr='my_sheets <- gs_ls()')
+  Hint: my_sheets <- gs_ls()
+
+- Class: text
+  Output: Get a Google Sheet to practice with
+      Don’t worry if you don’t have any suitable Google Sheets lying around!
+      The author published a sheet for you to practice with and have built 
+      functions into googlesheets to help you access it. The example sheet holds
+      some of the Gapminder data. Feel free to visit the Sheet in the browser.
+      "https://w3id.org/people/jennybc/googlesheets_gap_url"
+
+- Class: cmd_question
+  Output: The code below will put a copy of this sheet into your Drive, titled 
+      “Gapminder”. Have a try.
+      gs_gap() %>% gs_copy(to = "Gapminder")
+  CorrectAnswer: gs_gap() %>% gs_copy(to = "Gapminder")
+  AnswerTests: omnitest(correctExpr='gs_gap() %>% gs_copy(to = "Gapminder")')
+  Hint: Type gs_gap() %>% gs_copy(to = "Gapminder")
+
+- Class: text
+  Output: If that seems to have worked, go check for a sheet named “Gapminder” in your 
+      Google Sheets home screen. "https://docs.google.com/spreadsheets/"
+      You can also call gs_ls() again to see if the Gapminder sheet appears. 
+      Give it a regular expression to narrow the listing down, if you like.
+
+- Class: cmd_question
+  Output: For example, try gs_ls("Gapminder")
+  CorrectAnswer: gs_ls("Gapminder")
+  AnswerTests: omnitest(correctExpr='gs_ls("Gapminder")')
+  Hint: Try gs_ls("Gapminder")
+
+- Class: text
+  Output: Register a Sheet
+      If you plan to consume data from a sheet or edit it, you must first 
+      register it. This is how googlesheets records important info about the 
+      sheet that is required downstream by the Google Sheets or Google Drive 
+      APIs. Once registered, you can print the result to get some basic info 
+      about the sheet.
+
+- Class: cmd_question
+  Output: googlesheets provides several registration functions. 
+      Specifying the sheet by title? Use gs_title(). 
+      By key? Use gs_key(). 
+      Let's try register by title first and assign it to a variable named gap.
+  CorrectAnswer: gap <- gs_title("Gapminder")
+  AnswerTests: omnitest(correctExpr='gap <- gs_title("Gapminder")')
+  Hint: Try gap <- gs_title("Gapminder"). If you are getting an error that Gapminder is matched by multiple sheets, go to Google Sheets and delete one of the sheets with that name. 
+
+- Class: cmd_question
+  Output: Now print it to see what you got.
+  CorrectAnswer: gap
+  AnswerTests: omnitest(correctExpr='gap')
+  Hint: Try gap
+
+
+- Class: text
+  Output: The registration functions gs_title(), gs_key(), gs_url(), and gs_gs() return a
+      registered sheet as a googlesheet object, which is the first argument to 
+      practically every function in this package. Likewise, almost every 
+      function returns a freshly registered googlesheet object, ready to be 
+      stored or piped into the next command.
+
+- Class: cmd_question
+  Output: You can use gs_browse() to visit the Sheet corresponding to a registered
+      googlesheet in your browser. 
+  CorrectAnswer: gap %>% gs_browse()
+  AnswerTests: omnitest(correctExpr='gap %>% gs_browse()')
+  Hint: gap %>% gs_browse()
+
+- Class: text
+  Output: Inspect a Sheet
+      Once you’ve registered a Sheet, you can print it to get an overview of, 
+      e.g., its worksheets, their names, and dimensions. 
+      In addition, you can use gs_ws_ls() to get worksheet names as a character
+      vector.
+
+- Class: cmd_question
+  Output: Read all the data in one worksheet
+      gs_read() returns the contents of a worksheet as a data frame. Use the 
+      argument ws to specify the worksheet of interest. Let's take a look at the
+      worksheet "Oceania". (assign it to oceania)
+  CorrectAnswer: oceania <- gap %>% gs_read(ws = "Oceania")
+  AnswerTests: omnitest(correctExpr='oceania <- gap %>% gs_read(ws = "Oceania")')
+  Hint: oceania <- gap %>% gs_read(ws = "Oceania")
+
+- Class: cmd_question
+  Output: Now print oceania.
+  CorrectAnswer: oceania
+  AnswerTests: omnitest(correctExpr='oceania')
+  Hint: oceania
+
+- Class: text
+  Output: Read only certain cells
+      You can target specific cells via the range argument. The simplest usage 
+      is to specify an Excel-like cell range, such as range = “D12:F15” or 
+      range = “R1C12:R6C15”. The cell rectangle can be specified in various 
+      other ways, using helper functions. It can be degenerate, i.e. open-ended.
+
+- Class: cmd_question
+  Output: Let's see the worksheep 2 with range "A1:D8".
+  CorrectAnswer: gap %>% gs_read(ws = 2, range = "A1:D8")
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = 2, range = "A1:D8")')
+  Hint: gap %>% gs_read(ws = 2, range = "A1:D8")
+
+- Class: cmd_question
+  Output: Let's see the worksheep "Europe" with range cell_rows(1:4).
+  CorrectAnswer: gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))')
+  Hint: gap %>% gs_read(ws = "Europe", range = cell_rows(1:4))
+
+- Class: cmd_question
+  Output: Let's see the worksheep "Asia" with range cell_limits(c(1, 4), c(5, NA)).
+  CorrectAnswer: gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))
+  AnswerTests: omnitest(correctExpr='gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))')
+  Hint: gap %>% gs_read(ws = "Asia", range = cell_limits(c(1, 4), c(5, NA)))
+
+- Class: text
+  Output: Create a new Google Sheet
+      You can use gs_new() to create a new Sheet de novo and populate it with a 
+      bit of the iris data.
+      And gs_read() is a wrapper that bundles together the most common methods 
+      to read data from the API and transform it for downstream use.
+
+- Class: cmd_question
+  Output: Create a new Google sheet by
+      boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+  CorrectAnswer: boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+  AnswerTests: omnitest(correctExpr='boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)')
+  Hint: boring_ss <- gs_new("boring", ws_title = "iris-gs_new", input = head(iris), trim = TRUE, verbose = FALSE)
+
+- Class: cmd_question
+  Output: Access the newly created worksheet by pass it to gs_read().
+  CorrectAnswer: boring_ss %>% gs_read()
+  AnswerTests: omnitest(correctExpr='boring_ss %>% gs_read()')
+  Hint: boring_ss %>% gs_read()
+
+- Class: text
+  Output: Note how we store the returned value from gs_new() (and all other sheet editing 
+      functions). That’s because the registration info changes whenever we edit 
+      the sheet and we re-register it inside these functions, so this idiom will
+      help you make sequential edits and queries to the same sheet. 
+      You can copy an entire Sheet with gs_copy() and rename one with 
+      gs_rename().
+
+- Class: cmd_question
+  Output: Use gs_ws_new() to add some mtcars data as a second worksheet to boring_ss.
+      boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+  CorrectAnswer: boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+  AnswerTests: omnitest(correctExpr='boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)')
+  Hint: boring_ss <- boring_ss %>% gs_ws_new(ws_title = "mtcars-gs_ws_new", input = head(mtcars), trim = TRUE, verbose = FALSE)
+
+- Class: cmd_question
+  Output: Access this new worksheet by gs_read() with ws = 2.
+  CorrectAnswer: boring_ss %>% gs_read(ws = 2)
+  AnswerTests: omnitest(correctExpr='boring_ss %>% gs_read(ws = 2)')
+  Hint: boring_ss %>% gs_read(ws = 2)
+
+- Class: cmd_question
+  Output: We use gs_ws_delete() and gs_ws_rename() to delete the mtcars worksheet and 
+      rename the iris worksheets, respectively. Let's delete the second 
+      worksheet in boring_ss and rename the remaining worksheet to "iris".
+      Note that these functions can be piped together.
+  CorrectAnswer: boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")
+  AnswerTests: omnitest(correctExpr='boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")')
+  Hint: boring_ss <- boring_ss %>% gs_ws_delete(ws = 2) %>% gs_ws_rename(to = "iris")
+
+- Class: text
+  Output: Edit cells
+      There are two ways to edit cells within an existing worksheet of an 
+      existing spreadsheet.
+      - gs_edit_cells() can write into an arbitrary cell rectangle
+      - gs_add_row() can add a new row to the bottom of an existing cell rectangle
+
+- Class: text
+  Output: The previous two functions are both slow and you’re better off using gs_upload()
+      to create a new sheet from a local file. We'll get to that later.
+      Of the two, gs_add_row() is faster, but it can only be used when your data
+      occupies a very neat rectangle in the upper left corner of the sheet.
+
+- Class: cmd_question
+  Output: We create a new Sheet, foo, and set up some well-named empty worksheets to 
+      practice with. Try the following command.
+      foo <- gs_new("foo") %>% gs_ws_rename(from = "Sheet1", to = "edit_cells") %>% gs_ws_new("add_row")
+  CorrectAnswer: foo <- gs_new("foo") %>% gs_ws_rename(from = "Sheet1", to = "edit_cells") %>% gs_ws_new("add_row")
+  AnswerTests: omnitest(correctExpr='foo <- gs_new("foo") %>% gs_ws_rename(from = "Sheet1", to = "edit_cells") %>% gs_ws_new("add_row")')
+  Hint: foo <- gs_new("foo") %>% gs_ws_rename(from = "Sheet1", to = "edit_cells") %>% gs_ws_new("add_row")
+
+- Class: cmd_question
+  Output: Use gs_edit_cells() to add the first six rows of iris data, e.g. use head(iris),
+      into the blank sheet, edit_cells. Remember to trim the worksheet extent.
+  CorrectAnswer: foo <- foo %>% gs_edit_cells(ws = "edit_cells", input = head(iris), trim = TRUE)
+  AnswerTests: omnitest(correctExpr='foo <- foo %>% gs_edit_cells(ws = "edit_cells", input = head(iris), trim = TRUE)')
+  Hint: foo <- foo %>% gs_edit_cells(ws = "edit_cells", input = head(iris), trim = TRUE)
+
+- Class: cmd_question
+  Output: Use gs_edit_cells() to initialize sheet, add_row, with column headers and the 
+      first row of data. Remember to trim your sheet.
+  CorrectAnswer: foo <- foo %>% gs_edit_cells(ws = "add_row", input = head(iris, 1), trim = TRUE)
+  AnswerTests: omnitest(correctExpr='foo <- foo %>% gs_edit_cells(ws = "add_row", input = head(iris, 1), trim = TRUE)')
+  Hint: foo <- foo %>% gs_edit_cells(ws = "add_row", input = head(iris, 1), trim = TRUE)
+
+- Class: cmd_question
+  Output: Add the second row of data using gs_add_row() to the worksheet add_row. 
+  CorrectAnswer: foo <- foo %>% gs_add_row(ws = "add_row", input = iris[2, ])
+  AnswerTests: omnitest(correctExpr='foo <- foo %>% gs_add_row(ws = "add_row", input = iris[2, ])')
+  Hint: foo <- foo %>% gs_add_row(ws = "add_row", input = iris[2, ])
+
+- Class: cmd_question
+  Output: gs_add_row() will actually handle multiple rows at once, try adding the last six
+      rows of the iris data, e.g. use tail(iris)
+  CorrectAnswer: foo <- foo %>% gs_add_row(ws = "add_row", input = tail(iris))
+  AnswerTests: omnitest(correctExpr='foo <- foo %>% gs_add_row(ws = "add_row", input = tail(iris))')
+  Hint: foo <- foo %>% gs_add_row(ws = "add_row", input = tail(iris))
+
+- Class: cmd_question
+  Output: Let's inspect our work, e.g. the edit_cells worksheet, using gs_read()
+  CorrectAnswer: foo %>% gs_read(ws = "edit_cells")
+  AnswerTests: omnitest(correctExpr='foo %>% gs_read(ws = "edit_cells")')
+  Hint: foo %>% gs_read(ws = "edit_cells")
+
+- Class: cmd_question
+  Output: Let's inspect our work, the add_row worksheet, using gs_read()
+  CorrectAnswer: foo %>% gs_read(ws = "add_row")
+  AnswerTests: omnitest(correctExpr='foo %>% gs_read(ws = "add_row")')
+  Hint: foo %>% gs_read(ws = "add_row")
+
+- Class: text
+  Output: Go to your Google Sheets home screen, find the new sheet foo and admire it. You 
+      should see some iris data in the worksheets named edit_cells and add_row. 
+      You could also use gs_browse() to take you directly to those worksheets.
+
+- Class: text
+  Output: Protip - If your edit populates the sheet with everything it should have, set 
+      trim = TRUE and we will resize the sheet to match the data. Then the 
+      nominal worksheet extent is much more informative (vs. the default of 1000
+      rows and 26 columns) and future consumption via the cell feed will 
+      potentially be faster.
+
+- Class: cmd_question
+  Output: Delete Sheets
+      Use gs_delete() to delete entire Sheets. Let’s clean up by deleting the 
+      foo spreadsheet.
+  CorrectAnswer: gs_delete(foo)
+  AnswerTests: omnitest(correctExpr='gs_delete(foo)')
+  Hint: gs_delete(foo)
+
+- Class: text
+  Output: If you’d rather specify sheets for deletion by title, look at gs_grepdel() and 
+      gs_vecdel(). These functions also allow the deletion of multiple sheets at
+      once.
+
+- Class: cmd_question
+  Output: Make new Sheets from local delimited files or Excel workbooks
+      Use gs_upload() to create a new Sheet de novo from a suitable local file. 
+      First, we’ll write then upload a comma-delimited excerpt from the iris 
+      data. Try the following command.
+      iris %>% head(5) %>% write.csv("iris.csv", row.names = FALSE)
+  CorrectAnswer: iris %>% head(5) %>% write.csv("iris.csv", row.names = FALSE)
+  AnswerTests: omnitest(correctExpr='iris %>% head(5) %>% write.csv("iris.csv", row.names = FALSE)')
+  Hint: iris %>% head(5) %>% write.csv("iris.csv", row.names = FALSE)
+
+- Class: cmd_question
+  Output: Now use gs_upload() to create a new Sheet from file iris.csv. Assign it to a 
+      variable named iris_ss.
+  CorrectAnswer: iris_ss <- gs_upload("iris.csv")
+  AnswerTests: omnitest(correctExpr='iris_ss <- gs_upload("iris.csv")')
+  Hint: iris_ss <- gs_upload("iris.csv")
+
+- Class: text
+  Output: You can use gs_upload() to upload a multi-sheet Excel workbook as well.
+
+
+
+- Class: text
+  Output: Download Sheets as csv, pdf, or xlsx file
+      Use gs_download() to download a Google Sheet as a csv, pdf, or xlsx file. 
+      Downloading the spreadsheet as a csv file will export the first worksheet 
+      (default) unless another worksheet is specified.
+
+
+- Class: cmd_question
+  Output: Let's register the work sheet "Gapminder" by its title and download its "Africa"
+      worksheet and save the file as "gapminder-africa.csv".
+  CorrectAnswer: gs_title("Gapminder") %>% gs_download(ws = "Africa", to = "gapminder-africa.csv")
+  AnswerTests: omnitest(correctExpr='gs_title("Gapminder") %>% gs_download(ws = "Africa", to = "gapminder-africa.csv")')
+  Hint: gs_title("Gapminder") %>% gs_download(ws = "Africa", to = "gapminder-africa.csv")
+
+- Class: cmd_question
+  Output: Or you can download the entire spreadsheet as an Excel workbook. Let's call it 
+      "gapminder.xlsx".
+  CorrectAnswer: gs_title("Gapminder") %>% gs_download(to = "gapminder.xlsx")
+  AnswerTests: omnitest(correctExpr='gs_title("Gapminder") %>% gs_download(to = "gapminder.xlsx")')
+  Hint: gs_title("Gapminder") %>% gs_download(to = "gapminder.xlsx")
+
+
+- Class: text
+  Output: Congratulations! You have learned the basics of googlesheets. You can find more 
+      comprehensive tutorials on the author's git page.
+      "https://github.com/jennybc/googlesheets"
+      
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
+
