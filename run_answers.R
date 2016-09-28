@@ -25,6 +25,14 @@ run_answers = function(fol) {
       script = paste0("source('", file.path(fol, "scripts", script), "')")
     }
     xx = x$CorrectAnswer
+    if (!is.null(xx)){
+      cl = x$Class
+      if (!is.null(cl)){
+        if (cl %in% "mult_question") {
+          xx = paste0("#", xx)
+        }
+      }
+    }
     return(c(script, xx))
   })
   res = unlist(res)
