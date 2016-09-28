@@ -1,6 +1,6 @@
 - Class: meta
   Course: advdatasci swirl
-  Lesson: 02 03 googlesheets
+  Lesson: google_sheets
   Author: Detian Deng
   Type: Standard
   Organization: JHU Biostat
@@ -19,14 +19,7 @@
       Now, let's begin our lesson.
 
 - Class: cmd_question
-  Output: First, to install googlesheets, simply use command
-      install.packages("googlesheets")
-  CorrectAnswer: install.packages("googlesheets")
-  AnswerTests: omnitest(correctExpr='install.packages("googlesheets")')
-  Hint: Try install.packages("googlesheets")
-
-- Class: cmd_question
-  Output: Now we load the googlesheets package.
+  Output: Load the googlesheets package.
   CorrectAnswer: library(googlesheets)
   AnswerTests: omnitest(correctExpr='library(googlesheets)')
   Hint: library(googlesheets)
@@ -101,7 +94,7 @@
       Let's try register by title first and assign it to a variable named gap.
   CorrectAnswer: gap <- gs_title("Gapminder")
   AnswerTests: omnitest(correctExpr='gap <- gs_title("Gapminder")')
-  Hint: Try gap <- gs_title("Gapminder")
+  Hint: Try gap <- gs_title("Gapminder"). If you are getting an error that Gapminder is matched by multiple sheets, go to Google Sheets and delete one of the sheets with that name. 
 
 - Class: cmd_question
   Output: Now print it to see what you got.
@@ -109,51 +102,6 @@
   AnswerTests: omnitest(correctExpr='gap')
   Hint: Try gap
 
-- Class: text
-  Output: Need to access a sheet you do not own? You can access it by key if you know it.
-      We’re using the built-in functions gs_gap_key() and gs_gap_url() to 
-      produce the key and browser URL for the Gapminder example sheet, so you 
-      can see how this will play out with your own projects.
-
-- Class: cmd_question
-  Output: Use gs_gap_key() to get the key and assign it to GAP_KEY.
-  CorrectAnswer: GAP_KEY <- gs_gap_key()
-  AnswerTests: omnitest(correctExpr='GAP_KEY <- gs_gap_key()')
-  Hint: Try GAP_KEY <- gs_gap_key()
-
-- Class: cmd_question
-  Output: Register the spreadsheet by the key you just got and assign it to 
-      third_party_gap
-  CorrectAnswer: third_party_gap <- GAP_KEY %>% gs_key()
-  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_KEY %>% gs_key()')
-  Hint: Try third_party_gap <- GAP_KEY %>% gs_key()
-
-- Class: cmd_question
-  Output: You can also register by url.
-      Use gs_gap_url() to get the url first and assign it to GAP_URL.
-  CorrectAnswer: GAP_URL <- gs_gap_url()
-  AnswerTests: omnitest(correctExpr='GAP_URL <- gs_gap_url()')
-  Hint: GAP_URL <- gs_gap_url()
-
-- Class: cmd_question
-  Output: Then use gs_url() to register and assign it to third_party_gap.
-  CorrectAnswer: third_party_gap <- GAP_URL %>% gs_url()
-  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_URL %>% gs_url()')
-  Hint: third_party_gap <- GAP_URL %>% gs_url()
-
-- Class: cmd_question
-  Output: Registration by key is the safest, try extract_key_from_url(GAP_URL) to get the
-      key. Registering by key is a better idea in the long-run.
-  CorrectAnswer: extract_key_from_url(GAP_URL)
-  AnswerTests: omnitest(correctExpr='extract_key_from_url(GAP_URL)')
-  Hint: extract_key_from_url(GAP_URL)
-
-- Class: cmd_question
-  Output: Worried that a spreadsheet's registration is out-of-date?
-     You can re-register it by gap <- gap %>% gs_gs().
-  CorrectAnswer: gap <- gap %>% gs_gs()
-  AnswerTests: omnitest(correctExpr='gap <- gap %>% gs_gs()')
-  Hint: gap <- gap %>% gs_gs()
 
 - Class: text
   Output: The registration functions gs_title(), gs_key(), gs_url(), and gs_gs() return a
@@ -394,7 +342,17 @@
   AnswerTests: omnitest(correctExpr='gs_title("Gapminder") %>% gs_download(to = "gapminder.xlsx")')
   Hint: gs_title("Gapminder") %>% gs_download(to = "gapminder.xlsx")
 
+
 - Class: text
   Output: Congratulations! You have learned the basics of googlesheets. You can find more 
       comprehensive tutorials on the author's git page.
       "https://github.com/jennybc/googlesheets"
+      
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
+
