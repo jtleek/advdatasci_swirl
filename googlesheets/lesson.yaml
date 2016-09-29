@@ -1,6 +1,6 @@
 - Class: meta
   Course: advdatasci swirl
-  Lesson: 02 03 googlesheets
+  Lesson: googlesheets
   Author: Detian Deng
   Type: Standard
   Organization: JHU Biostat
@@ -18,12 +18,10 @@
       "https://cran.r-project.org/web/packages/googlesheets/README.html"
       Now, let's begin our lesson.
 
-- Class: cmd_question
-  Output: First, to install googlesheets, simply use command
-      install.packages("googlesheets")
-  CorrectAnswer: install.packages("googlesheets")
-  AnswerTests: omnitest(correctExpr='install.packages("googlesheets")')
-  Hint: Try install.packages("googlesheets")
+- Class: text
+  Output: First, make sure you have installed googlesheets package.
+      To install, simply use command
+      install.packages("googlesheets", repos="http://cran.us.r-project.org")
 
 - Class: cmd_question
   Output: Now we load the googlesheets package.
@@ -69,13 +67,13 @@
 - Class: cmd_question
   Output: The code below will put a copy of this sheet into your Drive, titled 
       “Gapminder”. Have a try.
-      gs_gap() %>% gs_copy(to = "Gapminder")
-  CorrectAnswer: gs_gap() %>% gs_copy(to = "Gapminder")
-  AnswerTests: omnitest(correctExpr='gs_gap() %>% gs_copy(to = "Gapminder")')
-  Hint: Type gs_gap() %>% gs_copy(to = "Gapminder")
+      gap <- gs_gap() %>% gs_copy(to = "Gapminder")
+  CorrectAnswer: gap <- gs_gap() %>% gs_copy(to = "Gapminder")
+  AnswerTests: omnitest(correctExpr='gap <- gs_gap() %>% gs_copy(to = "Gapminder")')
+  Hint: Type gap <- gs_gap() %>% gs_copy(to = "Gapminder")
 
 - Class: text
-  Output: If that seems to have worked, go check for a sheet named “Gapminder” in your 
+  Output: Go check for a sheet named “Gapminder” in your 
       Google Sheets home screen. "https://docs.google.com/spreadsheets/"
       You can also call gs_ls() again to see if the Gapminder sheet appears. 
       Give it a regular expression to narrow the listing down, if you like.
@@ -85,6 +83,13 @@
   CorrectAnswer: gs_ls("Gapminder")
   AnswerTests: omnitest(correctExpr='gs_ls("Gapminder")')
   Hint: Try gs_ls("Gapminder")
+
+- Class: cmd_question
+  Output: You might see two sheets named Gapminder in your home screen, this is a 
+      bug caused by the swirl package, so you need to run gs_delete(gap) to delete one of them.
+  CorrectAnswer: gs_delete(gap)
+  AnswerTests: omnitest(correctExpr='gs_delete(gap)')
+  Hint: Try gs_delete(gap)
 
 - Class: text
   Output: Register a Sheet
@@ -97,8 +102,8 @@
 - Class: cmd_question
   Output: googlesheets provides several registration functions. 
       Specifying the sheet by title? Use gs_title(). 
-      By key? Use gs_key(). 
-      Let's try register by title first and assign it to a variable named gap.
+      By key? Use gs_key(), but this does not work within swirl lessons, you can try on your own. 
+      Now let's register by title and assign it to a variable named gap.
   CorrectAnswer: gap <- gs_title("Gapminder")
   AnswerTests: omnitest(correctExpr='gap <- gs_title("Gapminder")')
   Hint: Try gap <- gs_title("Gapminder")
@@ -109,45 +114,6 @@
   AnswerTests: omnitest(correctExpr='gap')
   Hint: Try gap
 
-- Class: text
-  Output: Need to access a sheet you do not own? You can access it by key if you know it.
-      We’re using the built-in functions gs_gap_key() and gs_gap_url() to 
-      produce the key and browser URL for the Gapminder example sheet, so you 
-      can see how this will play out with your own projects.
-
-- Class: cmd_question
-  Output: Let's try register by url first.
-      Use gs_gap_url() to get the url first and assign it to GAP_URL.
-  CorrectAnswer: GAP_URL <- gs_gap_url()
-  AnswerTests: omnitest(correctExpr='GAP_URL <- gs_gap_url()')
-  Hint: GAP_URL <- gs_gap_url()
-
-- Class: cmd_question
-  Output: Then use gs_url() to register and assign it to third_party_gap.
-  CorrectAnswer: third_party_gap <- GAP_URL %>% gs_url()
-  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_URL %>% gs_url()')
-  Hint: third_party_gap <- GAP_URL %>% gs_url()
-  
-- Class: cmd_question
-  Output: Use gs_gap_key() to get the key and assign it to GAP_KEY.
-  CorrectAnswer: GAP_KEY <- gs_gap_key()
-  AnswerTests: omnitest(correctExpr='GAP_KEY <- gs_gap_key()')
-  Hint: Try GAP_KEY <- gs_gap_key()
-
-- Class: cmd_question
-  Output: Register the spreadsheet by the key you just got and assign it to 
-      third_party_gap
-  CorrectAnswer: third_party_gap <- GAP_KEY %>% gs_key()
-  AnswerTests: omnitest(correctExpr='third_party_gap <- GAP_KEY %>% gs_key()')
-  Hint: Try third_party_gap <- GAP_KEY %>% gs_key()
-  
-- Class: cmd_question
-  Output: Registration by key is the safest, try extract_key_from_url(GAP_URL) to get the
-      key. Registering by key is a better idea in the long-run.
-  CorrectAnswer: extract_key_from_url(GAP_URL)
-  AnswerTests: omnitest(correctExpr='extract_key_from_url(GAP_URL)')
-  Hint: extract_key_from_url(GAP_URL)
-
 - Class: cmd_question
   Output: Worried that a spreadsheet's registration is out-of-date?
      You can re-register it by gap <- gap %>% gs_gs().
@@ -156,10 +122,10 @@
   Hint: gap <- gap %>% gs_gs()
 
 - Class: text
-  Output: The registration functions gs_title(), gs_key(), gs_url(), and gs_gs() return a
-      registered sheet as a googlesheet object, which is the first argument to 
-      practically every function in this package. Likewise, almost every 
-      function returns a freshly registered googlesheet object, ready to be 
+  Output: The registration functions gs_title(), and gs_gs() return a
+      registered sheet as a googlesheet object, which is the first argument to
+      practically every function in this package. Likewise, almost every
+      function returns a freshly registered googlesheet object, ready to be
       stored or piped into the next command.
 
 - Class: cmd_question
