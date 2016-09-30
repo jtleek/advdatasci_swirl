@@ -1,0 +1,10 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: pipes
+  Author: Jeff Leek
+  Type: Standard
+  Organization: JHU Biostatistics
+  Version: 2.4.2
+
+- Class: text
+  Output: We are going to learn about pipes. They are a way of nicely organizing code that involves applying multiple functions in a row. 

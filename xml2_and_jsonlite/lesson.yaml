@@ -1,0 +1,193 @@
+- Class: meta
+  Course: advdatasci swirl
+  Lesson: xml2 and jsonlite
+  Author: Detian Deng
+  Type: Standard
+  Organization: JHU Biostatistics
+  Version: 2.4.2
+
+- Class: text
+  Output: Make sure you have installed xml2 and jsonlite before starting this class.
+  
+- Class: cmd_question
+  Output: Xml2 is a wrapper around the comprehensive libxml2 C library that makes
+    it easier to work with XML and HTML in R. Let's load the package first.
+  AnswerTests: omnitest(correctExpr='library(xml2)')
+  CorrectAnswer: library(xml2)
+  Hint: library(xml2)
+    
+- Class: cmd_question
+  Output: You can read XML and HTML with read_xml() and read_html(). Please read my_xml
+    by read_xml() and assign it to x.
+  AnswerTests: omnitest(correctExpr='x <- read_xml(my_xml)')
+  CorrectAnswer: x <- read_xml(my_xml)
+  Hint: x <- read_xml(my_xml)
+  
+- Class: cmd_question
+  Output: You can extract various components of a node with xml_text(), xml_attrs(),
+    xml_attr(), and xml_name(). Please get the name of this xml by xml_name().
+  AnswerTests: omnitest(correctExpr='xml_name(x)')
+  CorrectAnswer: xml_name(x)
+  Hint: xml_name(x)
+  
+- Class: cmd_question
+  Output: You can navigate the tree with xml_children(), xml_siblings() or xml_parent().
+    Now, get all the child nodes of x with xml_children().
+  AnswerTests: omnitest(correctExpr='xml_children(x)')
+  CorrectAnswer: xml_children(x)
+  Hint: xml_children(x)
+  
+- Class: cmd_question
+  Output: Alternatively, use xpath to jump directly to the nodes you’re interested
+    in with xml_find_one() or xml_find_all(). Now, find all baz nodes anywhere in
+    the document and assign it to baz.
+  AnswerTests: omnitest(correctExpr='baz <- xml_find_all(x, ".//baz")')
+  CorrectAnswer: baz <- xml_find_all(x, ".//baz")
+  Hint: baz <- xml_find_all(x, ".//baz")
+  
+- Class: cmd_question
+  Output: Take a look at baz.
+  AnswerTests: omnitest(correctExpr='baz')
+  CorrectAnswer: baz
+  Hint: baz
+  
+- Class: cmd_question
+  Output: Get the full path to the baz node with xml_path()
+  AnswerTests: omnitest(correctExpr='xml_path(baz)')
+  CorrectAnswer: xml_path(baz)
+  Hint: xml_path(baz)
+  
+- Class: cmd_question
+  Output: Get the id attribute of baz.
+  AnswerTests: omnitest(correctExpr='xml_attr(baz, "id")')
+  CorrectAnswer: xml_attr(baz, "id")
+  Hint: xml_attr(baz, "id")
+
+- Class: text
+  Output: Congratulations, you have experienced the main functionality of xml2 package.
+    Next, we will take a look at the jsonlite package.
+
+- Class: text
+  Output: The jsonlite package is a JSON parser/generator optimized for the web. Its
+    main strength is that it implements a bidirectional mapping between JSON data
+    and the most important R data types.
+
+- Class: text
+  Output: Thereby we can convert between R objects and JSON without loss of type or
+    information, and without the need for any manual data munging. This is ideal for
+    interacting with web APIs, or to build pipelines where data structures seamlessly
+    flow in and out of R using JSON.
+- Class: cmd_question
+  Output: First, let's load the library.
+  AnswerTests: omnitest(correctExpr='library(jsonlite)')
+  CorrectAnswer: library(jsonlite)
+  Hint: library(jsonlite)
+
+- Class: text
+  Output: In jsonlite package, the most frequently used functions are fromJSON, and
+    toJSON. As the name suggests, they convert between R objects and JSON automatically.
+
+- Class: text
+  Output: 'Simplification is the process where JSON arrays automatically get converted
+    from a list into a more specific R class. The fromJSON function has 3 arguments
+    which control the simplification process: simplifyVector, simplifyDataFrame and
+    simplifyMatrix. Each one is enabled by default.'
+
+- Class: cmd_question
+  Output: When simplifyVector is enabled, JSON arrays containing primitives (strings,
+    numbers, booleans or null) simplify into an atomic vector. For example, json1 is
+    a JSON array of primitives. Take a look at it.
+  AnswerTests: omnitest(correctExpr='json1')
+  CorrectAnswer: json1
+  Hint: json1
+
+- Class: cmd_question
+  Output: Use fromJSON to convert and simplify it into an atomic vector.
+  AnswerTests: omnitest(correctExpr='fromJSON(json1)')
+  CorrectAnswer: fromJSON(json1)
+  Hint: fromJSON(json1)
+
+- Class: cmd_question
+  Output: Retry the previous step without simplification, any JSON array turns into
+    a list.
+  AnswerTests: omnitest(correctExpr='fromJSON(json1, simplifyVector = FALSE)')
+  CorrectAnswer: fromJSON(json1, simplifyVector = FALSE)
+  Hint: fromJSON(json1, simplifyVector = FALSE)
+
+- Class: cmd_question
+  Output: When simplifyDataFrame is enabled, JSON arrays containing objects (key-value
+    pairs) simplify into a data frame. For example, take a look at json2. 
+  AnswerTests: omnitest(correctExpr='json2')
+  CorrectAnswer: json2
+  Hint: json2
+
+- Class: cmd_question
+  Output: Convert and simplify it into a data.frame by fromJSON, and assign it to
+    mydf.
+  AnswerTests: omnitest(correctExpr='mydf <- fromJSON(json2)')
+  CorrectAnswer: mydf <- fromJSON(json2)
+  Hint: mydf <- fromJSON(json2)
+
+- Class: cmd_question
+  Output: Take a look at mydf.
+  AnswerTests: omnitest(correctExpr='mydf')
+  CorrectAnswer: mydf
+  Hint: mydf
+
+- Class: cmd_question
+  Output: Add a new column called Ranking to mydf with value 3, 1, 2, 4.
+  AnswerTests: omnitest(correctExpr='mydf$Ranking <- c(3, 1, 2, 4)')
+  CorrectAnswer: mydf$Ranking <- c(3, 1, 2, 4)
+  Hint: mydf$Ranking <- c(3, 1, 2, 4)
+
+- Class: cmd_question
+  Output: Convert it back to JSON with toJSON
+  AnswerTests: omnitest(correctExpr='toJSON(mydf)')
+  CorrectAnswer: toJSON(mydf)
+  Hint: toJSON(mydf)
+
+- Class: cmd_question
+  Output: You can make the converted JSON looks more structured by setting pretty
+    = TRUE, let's try it.
+  AnswerTests: omnitest(correctExpr='toJSON(mydf, pretty = TRUE)')
+  CorrectAnswer: toJSON(mydf, pretty = TRUE)
+  Hint: toJSON(mydf, pretty = TRUE)
+
+- Class: cmd_question
+  Output: When simplifyMatrix is enabled, JSON arrays containing equal-length sub-arrays
+    simplify into a matrix (or higher order R array). For example, take a look at json3.
+  AnswerTests: omnitest(correctExpr='json3')
+  CorrectAnswer: json3
+  Hint: json3
+
+- Class: cmd_question
+  Output: Converit to matrix and assign to mymatrix.
+  AnswerTests: omnitest(correctExpr='mymatrix <- fromJSON(json3)')
+  CorrectAnswer: mymatrix <- fromJSON(json3)
+  Hint: mymatrix <- fromJSON(json3)
+
+- Class: cmd_question
+  Output: Print mymatrix
+  AnswerTests: omnitest(correctExpr='mymatrix')
+  CorrectAnswer: mymatrix
+  Hint: mymatrix
+
+- Class: cmd_question
+  Output: Convert it back to JSON with pretty enabled.
+  AnswerTests: omnitest(correctExpr='toJSON(mymatrix, pretty = TRUE)')
+  CorrectAnswer: toJSON(mymatrix, pretty = TRUE)
+  Hint: toJSON(mymatrix, pretty = TRUE)
+
+- Class: text
+  Output: Congratulations, you have experienced the main functionality of jsonlite
+    package.
+
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
+
+

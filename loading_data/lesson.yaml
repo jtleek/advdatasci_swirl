@@ -1,0 +1,238 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: loading_data
+  Author: Jeff Leek
+  Type: Standard
+  Organization: JHU Biostatistics and DSL
+  Version: 2.4.2
+
+- Class: text
+  Output: We are going to learn about reading data in R. A lot of this may be
+    review but you might learn about a package or two. 
+
+- Class: text
+  Output: The first thing we are going to do is work on loading
+    data from "flat" files. A "flat" file is any kind of file where
+    the data are stored as text - like a .csv, .txt, or .tsv file. 
+
+- Class: cmd_question
+  Output:  Let's start by creating a directory to download and store the data
+    we will be working with. Use the command "dir.create" to create a file
+    called "data" in your current working directory. 
+  CorrectAnswer: dir.create("data")
+  AnswerTests: omnitest(correctExpr='dir.create("data")')
+  Hint: Try dir.create("data")
+
+- Class: cmd_question
+  Output: Let's make sure that the file exists in your directory. Use the commmand list.files() to see all the files in your current working directory. You can use "." to indicate your current working directory.
+  CorrectAnswer: list.files(".")
+  AnswerTests: omnitest(correctExpr='list.files(".")')
+  Hint: Try list.files(".")
+
+
+- Class: cmd_question
+  Output: Now we will download the data for this project. The "downloader" library is useful for writing code for cross-platform downloads. Load it now with the library command.
+  CorrectAnswer: library(downloader)
+  AnswerTests: omnitest(correctExpr='library(downloader)')
+  Hint: Try library(downloader)
+
+- Class: cmd_question
+  Output: Next we need to find some data to download. We will be using speed cameras in Baltimore. Assign the file url "https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru/" to the variable called "file_url" 
+  CorrectAnswer: file_url <- "https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru/"
+  AnswerTests: file_url <- "https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru/"
+  Hint: Try file_url <- "https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru/"
+
+- Class: cmd_question
+  Output: Use the browseURL command on that url to see the data on the web. 
+  CorrectAnswer: browseURL(file_url)
+  AnswerTests: omnitest(correctExpr='browseURL(file_url)')
+  Hint: browseURL(file_url)
+  
+  
+- Class: cmd_question
+  Output: Load the lubridate package so we can record dates easily. 
+  CorrectAnswer: library(lubridate)
+  AnswerTests: omnitest(correctExpr='library(lubridate)')
+  Hint: library(lubridate)
+
+- Class: cmd_question
+  Output: When downloading a file from the internet, to ensure reproducibility
+    you should record the time you downloaded the file. Use the now() command
+    and assign the output to the variable date_downloaded
+  CorrectAnswer: date_downloaded <- now()
+  AnswerTests: omnitest(correctExpr='date_downloaded <- now()')
+  Hint: Try date_downloaded <- now()
+
+
+- Class: cmd_question
+  Output: Ok lets now try downloading the data. Use the download command to download the data. You will need
+      to pass the url and a destination file. Save the file to file.path("data","cameras.csv").
+  CorrectAnswer: download(file_url,destfile=file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path("data","cameras.csv"))')
+  Hint: Try download(file_url,destfile=file.path("data","cameras.csv"))
+
+- Class: cmd_question
+  Output: Unfortunately this website (like many) has the data table embedded in the html. You can read in the first few
+      lines of the file you downloaded and check this. Try using the command readLines, which
+      scans the file and reads the text into a vector, element per line. Assign this variable
+      to the name cameras. Make sure you read the file from the "data" directory using file.path("data","cameras.csv"). 
+  CorrectAnswer: cameras <- readLines(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras <- readLines(file.path("data","cameras.csv"))')
+  Hint: Try cameras <- readLines(file.path("data","cameras.csv"))
+
+- Class: cmd_question
+  Output: Look at only the top few elements of the "cameras" variable with the command
+      head and notice that it is an HTML file
+  CorrectAnswer: head(cameras)
+  AnswerTests: omnitest(correctExpr='head(cameras)')
+  Hint: Try head(cameras)
+
+
+- Class: cmd_question
+  Output: It turns out that we need to use the API to get at the actual csv
+      file. We will be learning about that in a future lesson. For the moment
+      this just means we need to use a different url http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0.
+      Assign this value to the variable file_url
+  CorrectAnswer: file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
+  AnswerTests: omnitest(correctExpr='file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"')
+  Hint: Try file_url <- "http://dl.dropboxusercontent.com/s/jy6xq7htk25j8su/cameras.csv?dl=0"
+
+- Class: cmd_question
+  Output: Ok lets now try downloading the data again. Use the download command to download the data. You will need
+      to pass the url and a destination file. Save the file to file.path("data","cameras.csv").
+  CorrectAnswer: download(file_url,destfile=file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='download(file_url,destfile=file.path("data","cameras.csv"))')
+  Hint: Try download(file_url,destfile=file.path('data','cameras.csv'))
+
+- Class: cmd_question
+  Output: We can read the data into R using the read.csv command. Try this now and assign the output to the "cameras" variable.
+  CorrectAnswer: cameras <- read.csv(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras <- read.csv(file.path("data","cameras.csv"))')
+  Hint: Try cameras <- read.csv(file.path("data","cameras.csv"))
+
+- Class: cmd_question
+  Output: Another way to read this file is with the "readr" package. Load that package now.
+  CorrectAnswer: library(readr)
+  AnswerTests: omnitest(correctExpr='library(readr)')
+  Hint: Try library(readr)
+
+- Class: cmd_question
+  Output: We can read the data into R using the read_csv command. Try this now and assign the output to the "cameras_readr" variable.
+  CorrectAnswer: cameras_readr <- read_csv(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras_readr <- read_csv(file.path("data","cameras.csv"))')
+  Hint: Try cameras_readr <- read_csv(file.path("data","cameras.csv"))
+
+- Class: cmd_question
+  Output: readr is faster than base (although it won't be much for this small example). But it does a couple
+      of things that are useful. One is that it automatically stores all text fields as characters, not as factors. Later
+      when we are doing text processing this will be important. To see this use the "str" command on the "cameras_readr" variable. 
+  CorrectAnswer: str(cameras_readr)
+  AnswerTests: omnitest(correctExpr='str(cameras_readr)')
+  Hint: Try str(cameras_readr)
+
+- Class: cmd_question
+  Output: For comparison try running the str command on the cameras variable and note that all the strings are stored as factors.
+  CorrectAnswer: str(cameras)
+  AnswerTests: omnitest(correctExpr='str(cameras)')
+  Hint: Try str(cameras)
+  
+- Class: cmd_question
+  Output: For huge text files the fastest way to get them into memory in R is using the "data.table" package. Load that package now.
+  CorrectAnswer: library(data.table)
+  AnswerTests: omnitest(correctExpr='library(data.table)')
+  Hint: Try library(data.table)
+  
+- Class: cmd_question
+  Output: You can use the fread command to load the data set in and assign it to the variable "cameras_fread"
+  CorrectAnswer: cameras_fread <- fread(file.path("data","cameras.csv"))
+  AnswerTests: omnitest(correctExpr='cameras_fread <- fread(file.path("data","cameras.csv"))')
+  Hint: Try cameras_fread <- fread(file.path("data","cameras.csv"))
+
+- Class: cmd_question
+  Output: This object is now a data.table object which works a little differently than we are used to. For example try
+      looking at the first column of cameras_fread using the command cameras_fread[,1]
+  CorrectAnswer: cameras_fread[,1]
+  AnswerTests: omnitest(correctExpr='cameras_fread[,1]')
+  Hint: Try cameras_fread[,1]
+
+- Class: text
+  Output: This command doesn't show you a whole column with a data.table object. To use these objects you need to learn an
+      entirely different syntax. I showed you this approach in case you need the fastest way to load data into R, but then
+      you'd need to learn the data.table package syntax. Most data sets can be handled with read_csv. 
+
+
+- Class: cmd_question
+  Output: Another very common format for data sets you will get is in Excel. We will use the "readxl" package
+      for reading these data in. Load that package now.
+  CorrectAnswer: library(readxl)
+  AnswerTests: omnitest(correctExpr='library(readxl)')
+  Hint: Try library(readxl)
+  
+
+
+- Class: cmd_question
+  Output: Let's download an excel spreadsheet to play with. Use the download command and save this file
+      "http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0" to a file
+      called "genomes.xlsx" in your "data" folder.
+  CorrectAnswer: download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))
+  AnswerTests: omnitest(correctExpr='download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))')
+  Hint: Try download("http://dl.dropboxusercontent.com/s/jxyvwvp7k8n8p0v/genomes.xlsx?dl=0",file.path("data","genomes.xlsx"))
+  
+
+- Class: cmd_question
+  Output: Remember to save the date and time that the file was downloaded. Assign that to the variable "genomes_download_date"
+  CorrectAnswer: genomes_download_date <- now()
+  AnswerTests: omnitest(correctExpr='genomes_download_date <- now()')
+  Hint: Try genomes_download_date <- now()
+  
+- Class: text
+  Output: Open the excel file and look at it. You can see that it has multiple "sheets" and the data is formatted differently
+    in each sheet.
+    
+- Class: cmd_question
+  Output: You can read the data into R using the read_excel command in the readxl package. Let's just use the
+      data from the 5th sheet on final QC. To do this, pass the file path and the sheet number to "read_excel". You
+      can also do this by sheet name, but I find using the number is usually easier. Assign the result to the variable "final_qc".
+  CorrectAnswer: final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5)
+  AnswerTests: omnitest(correctExpr='final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5)')
+  Hint: Try final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5)
+
+- Class: cmd_question
+  Output: Run the "str" command on that variable and note a problem with the row names (right next to the dollar signs). 
+  CorrectAnswer: str(final_qc)
+  AnswerTests: omnitest(correctExpr='str(final_qc)')
+  Hint: Try str(final_qc)
+
+- Class: text
+  Output: Go back and look at the spreadsheet and see if you can figure out what the problem is. 
+  
+  
+- Class: cmd_question
+  Output: The top line is causing problems with the reading of this sheet. We can skip this line by using 
+    the parameter skip and telling it the number of lines to skip. 
+  CorrectAnswer: final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
+  AnswerTests: omnitest(correctExpr='final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)')
+  Hint: Try final_qc <- read_excel(file.path("data","genomes.xlsx"),sheet=5,skip=1)
+
+- Class: cmd_question
+  Output: Run the "str" command on that variable and note the column names are better 
+  CorrectAnswer: str(final_qc)
+  AnswerTests: omnitest(correctExpr='str(final_qc)')
+  Hint: Try str(final_qc)
+    
+- Class: text
+  Output: Note that there is still a problem with the data set - the column "VerifyBam Affy" is
+    a character variable - but it looks like it should be numeric. We'll talk about how to fix
+    this in a future lesson. 
+
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
+  
+
+
+
