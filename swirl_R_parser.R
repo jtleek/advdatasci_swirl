@@ -28,7 +28,7 @@ make_df = function(filename) {
   df$type = NA
   df$type[ grepl("^###", df$value)] = "multiple"
   df$type[ grepl("^##[^#]", df$value)] = "message"
-  df$type[ grepl("^#[^#]", df$value)] = "command"
+  df$type[ grepl("^#[^#]", df$value)] = "question"
   
   df$type = na.locf(df$type)
   
@@ -80,7 +80,7 @@ make_yaml = function(L) {
     stopifnot(length(utype) == 1)
     vals = x$value
     
-    if (utype %in% "command") {
+    if (utype %in% "question") {
       stopifnot(length(vals) == 2)
       L = list(
         Class = paste0("cmd_", utype),
