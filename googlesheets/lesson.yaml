@@ -1,6 +1,6 @@
 - Class: meta
   Course: advdatasci swirl
-  Lesson: google_sheets
+  Lesson: googlesheets
   Author: Detian Deng
   Type: Standard
   Organization: JHU Biostat
@@ -62,13 +62,13 @@
 - Class: cmd_question
   Output: The code below will put a copy of this sheet into your Drive, titled 
       “Gapminder”. Have a try.
-      gs_gap() %>% gs_copy(to = "Gapminder")
-  CorrectAnswer: gs_gap() %>% gs_copy(to = "Gapminder")
-  AnswerTests: omnitest(correctExpr='gs_gap() %>% gs_copy(to = "Gapminder")')
-  Hint: Type gs_gap() %>% gs_copy(to = "Gapminder")
+      gap <- gs_gap() %>% gs_copy(to = "Gapminder")
+  CorrectAnswer: gap <- gs_gap() %>% gs_copy(to = "Gapminder")
+  AnswerTests: omnitest(correctExpr='gap <- gs_gap() %>% gs_copy(to = "Gapminder")')
+  Hint: Type gap <- gs_gap() %>% gs_copy(to = "Gapminder")
 
 - Class: text
-  Output: If that seems to have worked, go check for a sheet named “Gapminder” in your 
+  Output: Go check for a sheet named “Gapminder” in your 
       Google Sheets home screen. "https://docs.google.com/spreadsheets/"
       You can also call gs_ls() again to see if the Gapminder sheet appears. 
       Give it a regular expression to narrow the listing down, if you like.
@@ -78,6 +78,13 @@
   CorrectAnswer: gs_ls("Gapminder")
   AnswerTests: omnitest(correctExpr='gs_ls("Gapminder")')
   Hint: Try gs_ls("Gapminder")
+
+- Class: cmd_question
+  Output: You might see two sheets named Gapminder in your home screen, this is a 
+      bug caused by the swirl package, so you need to run gs_delete(gap) to delete one of them.
+  CorrectAnswer: gs_delete(gap)
+  AnswerTests: omnitest(correctExpr='gs_delete(gap)')
+  Hint: Try gs_delete(gap)
 
 - Class: text
   Output: Register a Sheet
@@ -90,8 +97,8 @@
 - Class: cmd_question
   Output: googlesheets provides several registration functions. 
       Specifying the sheet by title? Use gs_title(). 
-      By key? Use gs_key(). 
-      Let's try register by title first and assign it to a variable named gap.
+      By key? Use gs_key(), but this does not work within swirl lessons, you can try on your own. 
+      Now let's register by title and assign it to a variable named gap.
   CorrectAnswer: gap <- gs_title("Gapminder")
   AnswerTests: omnitest(correctExpr='gap <- gs_title("Gapminder")')
   Hint: Try gap <- gs_title("Gapminder"). If you are getting an error that Gapminder is matched by multiple sheets, go to Google Sheets and delete one of the sheets with that name. 
@@ -103,11 +110,19 @@
   Hint: Try gap
 
 
+- Class: cmd_question
+  Output: Worried that a spreadsheet's registration is out-of-date?
+     You can re-register it by gap <- gap %>% gs_gs().
+  CorrectAnswer: gap <- gap %>% gs_gs()
+  AnswerTests: omnitest(correctExpr='gap <- gap %>% gs_gs()')
+  Hint: gap <- gap %>% gs_gs()
+
+
 - Class: text
-  Output: The registration functions gs_title(), gs_key(), gs_url(), and gs_gs() return a
-      registered sheet as a googlesheet object, which is the first argument to 
-      practically every function in this package. Likewise, almost every 
-      function returns a freshly registered googlesheet object, ready to be 
+  Output: The registration functions gs_title(), and gs_gs() return a
+      registered sheet as a googlesheet object, which is the first argument to
+      practically every function in this package. Likewise, almost every
+      function returns a freshly registered googlesheet object, ready to be
       stored or piped into the next command.
 
 - Class: cmd_question
@@ -347,7 +362,7 @@
   Output: Congratulations! You have learned the basics of googlesheets. You can find more 
       comprehensive tutorials on the author's git page.
       "https://github.com/jennybc/googlesheets"
-      
+
 - Class: mult_question
   Output: Would you like to submit the log of this lesson to Google Forms so
     that your instructor may evaluate your progress?
@@ -355,4 +370,3 @@
   CorrectAnswer: Yes
   AnswerTests: submit_log()
   Hint: ""
-
