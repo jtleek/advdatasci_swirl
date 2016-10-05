@@ -127,6 +127,13 @@
   CorrectAnswer: early_para <- xml_text(early)
   AnswerTests: omnitest(correctExpr='early_para <- xml_text(early)')
   Hint: early_para <- xml_text(early)
+  
+- Class: cmd_question
+  Output: Let's print the output of early_para.
+  CorrectAnswer: early_para
+  AnswerTests: omnitest(correctExpr='early_para')
+  Hint: early_para  
 
 - Class: text
   Output: Now we see we have the first 2 paragraphs from this Wikipedia page.
+
