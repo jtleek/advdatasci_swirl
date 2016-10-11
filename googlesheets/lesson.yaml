@@ -1,10 +1,6 @@
 - Class: meta
   Course: advdatasci swirl
-<<<<<<< HEAD:googlesheets/lesson.yaml
   Lesson: googlesheets
-=======
-  Lesson: google_sheets
->>>>>>> jtleek/master:googlesheets/lesson.yaml
   Author: Detian Deng
   Type: Standard
   Organization: JHU Biostat
@@ -22,18 +18,8 @@
       "https://cran.r-project.org/web/packages/googlesheets/README.html"
       Now, let's begin our lesson.
 
-<<<<<<< HEAD:googlesheets/lesson.yaml
-- Class: text
-  Output: First, make sure you have installed googlesheets package.
-      To install, simply use command
-      install.packages("googlesheets", repos="http://cran.us.r-project.org")
-
-- Class: cmd_question
-  Output: Now we load the googlesheets package.
-=======
 - Class: cmd_question
   Output: Load the googlesheets package.
->>>>>>> jtleek/master:googlesheets/lesson.yaml
   CorrectAnswer: library(googlesheets)
   AnswerTests: omnitest(correctExpr='library(googlesheets)')
   Hint: library(googlesheets)
@@ -123,15 +109,14 @@
   AnswerTests: omnitest(correctExpr='gap')
   Hint: Try gap
 
-<<<<<<< HEAD:googlesheets/lesson.yaml
+
 - Class: cmd_question
   Output: Worried that a spreadsheet's registration is out-of-date?
      You can re-register it by gap <- gap %>% gs_gs().
   CorrectAnswer: gap <- gap %>% gs_gs()
   AnswerTests: omnitest(correctExpr='gap <- gap %>% gs_gs()')
   Hint: gap <- gap %>% gs_gs()
-=======
->>>>>>> jtleek/master:googlesheets/lesson.yaml
+
 
 - Class: text
   Output: The registration functions gs_title(), and gs_gs() return a
@@ -377,11 +362,7 @@
   Output: Congratulations! You have learned the basics of googlesheets. You can find more 
       comprehensive tutorials on the author's git page.
       "https://github.com/jennybc/googlesheets"
-<<<<<<< HEAD:googlesheets/lesson.yaml
 
-=======
-      
->>>>>>> jtleek/master:googlesheets/lesson.yaml
 - Class: mult_question
   Output: Would you like to submit the log of this lesson to Google Forms so
     that your instructor may evaluate your progress?
@@ -389,7 +370,3 @@
   CorrectAnswer: Yes
   AnswerTests: submit_log()
   Hint: ""
-<<<<<<< HEAD:googlesheets/lesson.yaml
-=======
-
->>>>>>> jtleek/master:googlesheets/lesson.yaml

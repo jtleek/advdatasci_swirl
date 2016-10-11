@@ -17,3 +17,4 @@ mydf <- read.csv(.path2csv, as.is = TRUE)
 # progress file after each step.
 cran <- tbl_df(mydf)
 by_package <- group_by(cran, package)
+swirl_options(swirl_logging = TRUE)

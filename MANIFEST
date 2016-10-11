@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-googlesheets
-=======
 loading_data
-pipes
-googlesheets
 Grouping_and_Chaining_with_dplyr
->>>>>>> jtleek/master
+googlesheets
+Dates_and_Times_with_lubridate

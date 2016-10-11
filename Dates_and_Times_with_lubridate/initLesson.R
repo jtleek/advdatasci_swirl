@@ -8,3 +8,5 @@ dt2 <- c('2014-05-14', '2014-09-22', '2014-07-11')
 stopwatch <- function() {
   invisible()
 }
+
+swirl_options(swirl_logging = TRUE)

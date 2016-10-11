@@ -80,6 +80,7 @@ make_yaml = function(L) {
     stopifnot(length(utype) == 1)
     vals = x$value
     
+
     if (utype %in% "command") {
       stopifnot(length(vals) == 2)
       L = list(
@@ -138,10 +139,10 @@ make_lesson = function(filename, output) {
   yaml = make_yaml(L)
   write.yaml(yaml, output)
 }
-# filename = "example.R"
-# make_lesson("example.R", output = "example_lesson.yaml")
 
-# }
+
+make_lesson("example.R", output = "example_lesson.yaml")
+
 
 
 
