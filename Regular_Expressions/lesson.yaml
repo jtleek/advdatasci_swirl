@@ -1,0 +1,373 @@
+- Class: meta
+  Course: advdatasci_swirl
+  Lesson: Regular Expressions
+  Author: Sean Kross
+  Type: Standard
+  Organization: The Johns Hopkins Data Science Lab
+  Version: 2.4.2
+
+- Class: text
+  Output: Now that we’ve covered the basics of string manipulation in R, 
+    let’s discuss the more advanced topic of regular expressions. A regular 
+    expression is a string that defines a pattern that could be contained 
+    within another string. A regular expression can be used for searching for 
+    a string, searching within a string, or replacing one part of a string with 
+    another string. In this lesson I might refer to a regular expression as 
+    a regex, just know that they’re the same thing.
+
+- Class: text
+  Output: Regular expressions use characters to define patterns of other 
+    characters. Although that approach may seem problematic at first, 
+    we’ll discuss meta-characters (characters that describe other characters) 
+    and how you can use them to create powerful regular expressions.
+    
+- Class: text
+  Output: One of the most basic functions in R that uses regular expressions 
+    is the grepl() function, which takes two arguments - a regular expression 
+    and a string to be searched. If the string contains the specified regular 
+    expression then grepl() will return TRUE, otherwise it will return FALSE.
+
+- Class: cmd_question
+  Output: Let’s contruct an example using grepl() with a string and a regex.
+    First assign the regex "a" to a variable called regular_expression.
+  CorrectAnswer: regular_expression <- "a"
+  AnswerTests: omnitest(correctExpr='regular_expression <- "a"')
+  Hint: Just type regular_expression <- "a"
+
+- Class: cmd_question
+  Output: Next assign the string "Maryland" to a variable called 
+    string_to_search.
+  CorrectAnswer: string_to_search <- "Maryland"
+  AnswerTests: omnitest(correctExpr='string_to_search <- "Maryland"',)
+  Hint: Just type string_to_search <- "Maryland"
+
+- Class: cmd_question
+  Output: Now use grepl() to see whether regular_expression is present in
+    string_to_search.
+  CorrectAnswer: grepl(regular_expression, string_to_search)
+  AnswerTests: omnitest(correctExpr='grepl(regular_expression, string_to_search)')
+  Hint: Just type grepl(regular_expression, string_to_search)
+
+- Class: text
+  Output: In the previous example we specify the regular expression "a" and store 
+    it in a variable called regular_expression. Remember that regular 
+    expressions are just strings! We also store the string "Maryland" in a 
+    variable called string_to_search. The regular expression "a" represents 
+    a single occurrence of the character "a". Since "a" is contained 
+    within "Maryland", grepl() returns the value TRUE.
+
+- Class: mult_question
+  Output: Which of the following expressions would return the value FALSE?
+  AnswerChoices: grepl("u", "Maryland");grepl("M", "Maryland");grepl("a", "Maryland")
+  CorrectAnswer: grepl("u", "Maryland")
+  AnswerTests: omnitest(correctVal= 'grepl("u", "Maryland")')
+  Hint: Which character is not present in "Maryland" ?
+
+- Class: cmd_question
+  Output: Let's try a few more examples. Before you enter each comming into
+    the R console, try to guess what the result will be (either TRUE or FALSE).
+    Type grepl("ryla", "Maryland") into the R console.
+  CorrectAnswer: grepl("ryla", "Maryland")
+  AnswerTests: omnitest(correctExpr='grepl("ryla", "Maryland")')
+  Hint: Just type grepl("ryla", "Maryland")
+
+- Class: cmd_question
+  Output: Now try typing grepl("Marly", "Maryland") into the R console.
+  CorrectAnswer: grepl("Marly", "Maryland")
+  AnswerTests: omnitest(correctExpr='grepl("Marly", "Maryland")')
+  Hint: Just type grepl("Marly", "Maryland")
+
+- Class: text
+  Output: Since "ryla" is a sub-string of "Maryland", grepl() returns TRUE, 
+    however when a regular expression like "Marly" is searched grepl() 
+    returns FALSE because it is not a sub-string of "Maryland".
+
+- Class: cmd_question
+  Output: There’s a dataset that comes with R called state.name which is a
+    vector of strings, one for each state in the United States of America.
+    We’re going to use this vector in several of the following examples. Let's
+    take a look at this vector by entering head(state.name)
+  CorrectAnswer: head(state.name)
+  AnswerTests: omnitest(correctExpr='head(state.name)')
+  Hint: Just type head(state.name)
+
+- Class: text
+  Output: Let’s build a regular expression for identifying several strings in 
+    this vector, specifically a regular expression that will match names of 
+    states that both start and end with a vowel. The state name could start 
+    and end with any vowel, so we won’t be able to match exact sub-strings 
+    like in the previous examples. Thankfully we can use metacharacters to 
+    look for vowels and other parts of strings.
+
+- Class: figure
+  Output: I'm opening up a table of metacharacters that I'll be refering to
+    for the rest of the lesson.
+  Figure: metatbl.R
+  FigureType: new
+
+- Class: text
+  Output: The first metacharacter that we’ll discuss is ".". The metacharacter 
+    that only consists of a period represents any character other than a new 
+    line (we’ll discuss new lines soon).
+
+- Class: cmd_question
+  Output: Let's try using this metacharacter. Enter grepl(".", "Maryland") into
+    the R console to see if there is one instance of any character present.
+  CorrectAnswer: grepl(".", "Maryland")
+  AnswerTests: omnitest(correctExpr='grepl(".", "Maryland")')
+  Hint: Just type grepl(".", "Maryland")
+
+- Class: cmd_question
+  Output: Let's try one more time using this metacharacter. Enter 
+    grepl(".", "") into the R console.
+  CorrectAnswer: grepl(".", "")
+  AnswerTests: omnitest(correctExpr='grepl(".", "")')
+  Hint: Just type grepl(".", "")
+
+- Class: text
+  Output: There aren't any characters in an empty string, there this expression
+    is evaluated to FALSE.
+
+- Class: cmd_question
+  Output: As you can see the period metacharacter is very liberal. This 
+    metacharacter is most userful when you don’t care about a set of 
+    characters in a regular expression. Enter 
+    grepl("a.b", c("aaa", "aab", "abb", "acadb")) into the R console to see what
+    happens.
+  CorrectAnswer: grepl("a.b", c("aaa", "aab", "abb", "acadb"))
+  AnswerTests: omnitest(correctExpr='grepl("a.b", c("aaa", "aab", "abb", "acadb"))')
+  Hint: Just type grepl("a.b", c("aaa", "aab", "abb", "acadb"))
+
+- Class: text
+  Output: In the previos case grepl() returns TRUE for all strings that contain 
+    an "a" followed by any other character followed by a "b".
+
+- Class: text
+  Output: You can specify a regular expression that contains a certain number 
+    of characters or metacharacters using the enumeration metacharacters.
+
+- Class: cmd_question
+  Output: The "+" metacharacter indicates that one or more of the preceding 
+    expression should be present and "*" indicates that zero or more of the 
+    preceding expression is present. Use grepl() to see if the string "Maryland"
+    contains one for more of "a"
+  CorrectAnswer: grepl("a+", "Maryland")
+  AnswerTests: omnitest(correctExpr='grepl("a+", "Maryland")')
+  Hint: Just type grepl("a+", "Maryland")
+
+- Class: cmd_question
+  Output: Now use grepl() to see if the string "Maryland"
+    contains zero for more of "x"
+  CorrectAnswer: grepl("x*", "Maryland")
+  AnswerTests: omnitest(correctExpr='grepl("x*", "Maryland")')
+  Hint: Just type grepl("x*", "Maryland")
+
+- Class: text
+  Output: 'You can also specify exact numbers of expressions using curly 
+    brackets {}. For example "a{5}" specifies "a exactly five times,"
+    "a{2,5}" specifies "a between 2 and 5 times," and "a{2,}" specifies 
+    "a at least 2 times."'
+
+- Class: cmd_question
+  Output: Use grepl() to see if the string "Mississippi" contains exactly
+    two adjacent "s" (using curly brackets).
+  CorrectAnswer: grepl("s{2}", "Mississippi")
+  AnswerTests: omnitest(correctExpr='grepl("s{2}", "Mississippi")')
+  Hint: Just type grepl("s{2}", "Mississippi")
+  
+- Class: cmd_question
+  Output: Use grepl() to see if the string "Mississippi" contains two or three
+    adjacent "i" (using curly brackets).
+  CorrectAnswer: grepl("i{2,3}", "Mississippi")
+  AnswerTests: omnitest(correctExpr='grepl("i{2,3}", "Mississippi")')
+  Hint: Just type grepl("i{2,3}", "Mississippi")
+
+- Class: text
+  Output: In addition to curly brackets you can use parentheses "()" to create
+    a capturing group. A capturing group allows you to use quantifiers on other
+    regular expressions. Let's use a capturing group to see if the string
+    "Mississippi" contains the substring "iss" twice.
+
+- Class: cmd_question
+  Output: Type grepl("(iss){2}", "Mississippi") into the R console to see if
+    the substring "iss" exists twice adjacently in the string "Mississippi"
+  CorrectAnswer: grepl("(iss){2}", "Mississippi")
+  AnswerTests: omnitest(correctExpr='grepl("(iss){2}", "Mississippi")')
+  Hint: Just type grepl("(iss){2}", "Mississippi")
+
+- Class: text
+  Output: Notice that the regular expression in the previous example is
+    essentially the same as "ississ"
+    
+- Class: mult_question
+  Output: Which of the following expressions will evaluate to TRUE? This is
+    tough! Take a minute to think about it.
+  AnswerChoices: grepl("(i.{2}){3}", "Mississippi");grepl("(i.{2}){4}", "Mississippi");grepl("(i.{3}){3}", "Mississippi")
+  CorrectAnswer: grepl("(i.{2}){3}", "Mississippi")
+  AnswerTests: omnitest(correctVal= 'grepl("(i.{2}){3}", "Mississippi")')
+  Hint: Which regular expression roughtly translates to - Does "Mississippi" 
+    contain the pattern of an "i" followed by 2 of any character, with that 
+    pattern repeated three times adjacently?
+
+- Class: text
+  Output: You can specify sets of characters with regular expressions, some of
+    which come built in, but you can build your own character sets too. It will
+    be a good idea to reference the metachacter table I brought up before.
+    
+- Class: text
+  Output: First we'll discuss the built in character sets words ("\\w"), 
+    digits ("\\d"), and whitespace characters ("\\s"). Words specify any letter,
+    digit, or a underscore, digits specify the digits 0 through 9, and 
+    whitespace specifies line breaks, tabs, or spaces. Each of these character 
+    sets have their own compliments - not words ("\\W"), not digits ("\\D"), and
+    not whitespace characters ("\\S"). Each specifies all of the characters not
+    included in their corresponding character sets.
+
+- Class: cmd_question
+  Output: Let's try out a few of these character sets. Type grepl("\\d", "0123456789")
+    into the R console to see if the string "0123456789" contains a digit.
+  CorrectAnswer: grepl("\\d", "0123456789")
+  AnswerTests: omnitest(correctExpr='grepl("\x5c\x5cd", "0123456789")')
+  Hint: Just type grepl("\\d", "0123456789")
+
+- Class: cmd_question
+  Output: Now let's try using the compliment of the "\\d" set. Enter
+    grepl("\\D", "0123456789") into the R console to see if there are any
+    non-digits in the string "0123456789"
+  CorrectAnswer: grepl("\\D", "0123456789")
+  AnswerTests: omnitest(correctExpr='grepl("\x5c\x5cD", "0123456789")')
+  Hint: Just type grepl("\\D", "0123456789")
+
+- Class: mult_question
+  Output: Which of the following evaluates to FALSE?
+  AnswerChoices: grepl("\\s", "abcdefghijklmnopqrstuvwxyz0123456789");grepl("\\w", "abcdefghijklmnopqrstuvwxyz0123456789");grepl("\\d", "abcdefghijklmnopqrstuvwxyz0123456789")
+  CorrectAnswer: grepl("\\s", "abcdefghijklmnopqrstuvwxyz0123456789")
+  AnswerTests: omnitest(correctVal= 'grepl("\x5c\x5cs", "abcdefghijklmnopqrstuvwxyz0123456789")')
+  Hint: Make sure to reference your table of metacharacters!
+
+- Class: text
+  Output: You can also specify specific character sets using straight brackets 
+    []. For example a character set of just the vowels would look
+    like - "[aeiou]". You can find the complement to a specific character by 
+    putting a carrot ^ after the first bracket. For example "[^aeiou]" matches 
+    all characters except the lowercase vowels. You can also specify ranges of 
+    characters using a hyphen - inside of the brackets. For example "[a-m]" 
+    matches all of the lowercase characters between a and m, while "[5-8]" 
+    matches any digit between 5 and 8 inclusive.
+
+- Class: cmd_question
+  Output: Time to take some of the training wheels off! Use grepl() to see if
+    there is a vowel in the string "rhythms"
+  CorrectAnswer: grepl("[aeiou]", "rhythms")
+  AnswerTests: omnitest(correctExpr='grepl("[aeiou]", "rhythms")')
+  Hint: Make sure the vowels in the set are in alphabetical order. This doesn't
+    matter when using regular expressions, but that's the answer that swirl is
+    looking for.
+
+- Class: mult_question
+  Output: Which of the following expressions evaluates to TRUE?
+  AnswerChoices: grepl("[a-mA-M]", "ABC");grepl("[^AEIOU]", "rhythms");grepl("[a-m]", "ABC")
+  CorrectAnswer: grepl("[a-mA-M]", "ABC")
+  AnswerTests: omnitest(correctVal= 'grepl("[a-mA-M]", "ABC")')
+  Hint: Think about how character sets work!
+
+- Class: text
+  Output: You might be wondering how you can use regular expressions to match 
+    a particular punctuation mark since many punctuation marks are used as 
+    metacharacters! Putting two backslashes before a punctuation mark that is 
+    also a metacharacter indicates that you are looking for the symbol and not 
+    the metacharacter meaning. For example "\\." indicates you are trying to 
+    match a period in a string.
+
+- Class: cmd_question
+  Output: Use grepl() to see whether or not a peroid exists in the string
+    "http://www.jhsph.edu/"
+  CorrectAnswer: grepl("\\.", "http://www.jhsph.edu/")
+  AnswerTests: omnitest(correctExpr='grepl("\x5c\x5c.", "http://www.jhsph.edu/")')
+  Hint: Just type grepl("\\.", "http://www.jhsph.edu/")
+
+- Class: mult_question
+  Output: Which of the following expressions evaluates to TRUE?
+  AnswerChoices: grepl("\\+", "tragedy + time = humor");grepl("\\.", "tragedy + time = humor");grepl("\\*", "tragedy + time = humor")
+  CorrectAnswer: grepl("\\+", "tragedy + time = humor")
+  AnswerTests: omnitest(correctVal= 'grepl("\x5c\x5c+", "tragedy + time = humor")')
+  Hint: Remember you're not using metacharacters!
+
+- Class: text
+  Output: There are also metacharacters for matching the beginning and the end 
+    of a string which are "^" and "$" respectively.
+
+- Class: cmd_question
+  Output: Let's test these operators out. Enter grepl("^a", c("bab", "aab"))
+    into the R console in order to see if either string begins with "a"
+  CorrectAnswer: grepl("^a", c("bab", "aab"))
+  AnswerTests: omnitest(correctExpr='grepl("^a", c("bab", "aab"))')
+  Hint: Just type grepl("^a", c("bab", "aab"))
+
+- Class: cmd_question
+  Output: Now use grepl() to see if the two strings from the last question end
+    with the letter "b"
+  CorrectAnswer: grepl("b$", c("bab", "aab"))
+  AnswerTests: any_of_exprs('grepl("b$", c("bab", "aab"))', 'grepl("b$", c("aab", "bab"))')
+  Hint: Take a look at the anser to the last question, and remember to use the
+    "$" metacharacter which represeents the end of a string!
+
+- Class: text
+  Output: The last metacharacter we’ll discuss is the OR metacharacter ("|"). 
+    The OR metacharacter matches either the regex on the left or the regex on 
+    the right side of this character.
+
+- Class: cmd_question
+  Output: Enter grepl("a|b", c("abc", "bcd", "cde")) into the R console to see
+    which strings contain "a" or "b"
+  CorrectAnswer: grepl("a|b", c("abc", "bcd", "cde"))
+  AnswerTests: omnitest(correctExpr='grepl("a|b", c("abc", "bcd", "cde"))')
+  Hint: Just type grepl("a|b", c("abc", "bcd", "cde"))
+
+- Class: mult_question
+  Output: The expression grepl("North|South", c("South Dakota", "North Carolina", "West Virginia"))
+    evaluates to which of the following?
+  AnswerChoices: TRUE TRUE FALSE;TRUE FALSE FALSE;FALSE TRUE FALSE
+  CorrectAnswer: TRUE TRUE FALSE
+  AnswerTests: omnitest(correctVal= 'TRUE TRUE FALSE')
+  Hint: Does the string contain the substring North or South?
+
+- Class: text
+  Output: Finally we’ve learned enough to create a regular expression that 
+    matches all state names that both begin and end with a vowel! This regular
+    expression must match the beginning of a string, then one instance of a 
+    capalized vowel, then any characters until one instance of a lowercase
+    vowel followed by the end of the string.
+
+- Class: cmd_question
+  Output: Constructing this regular expression may be a little tough so I'll
+    help you out! Enter start_end_vowel <- "^[AEIOU]{1}.+[aeiou]{1}$" into
+    the R console to store this regex.
+  CorrectAnswer: start_end_vowel <- "^[AEIOU]{1}.+[aeiou]{1}$"
+  AnswerTests: omnitest(correctExpr='start_end_vowel <- "^[AEIOU]{1}.+[aeiou]{1}$"')
+  Hint: Just type - start_end_vowel <- "^[AEIOU]{1}.+[aeiou]{1}$"
+
+- Class: cmd_question
+  Output: Now you can see which states match this regular expression. Enter
+    vowel_state_lgl <- grepl(start_end_vowel, state.name) into the R console
+    to store a logical vector which indicates which strings in state.name
+    matches the regular expression.
+  CorrectAnswer: vowel_state_lgl <- grepl(start_end_vowel, state.name)
+  AnswerTests: omnitest(correctExpr='vowel_state_lgl <- grepl(start_end_vowel, state.name)')
+  Hint: Just type vowel_state_lgl <- grepl(start_end_vowel, state.name)
+
+- Class: cmd_question
+  Output: Now finally index state.name with the vector you created in the 
+    last question in order to see which state names start and end with a
+    vowel!
+  CorrectAnswer: state.name[vowel_state_lgl]
+  AnswerTests: omnitest(correctExpr='state.name[vowel_state_lgl]')
+  Hint: Just type state.name[vowel_state_lgl]
+  
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
