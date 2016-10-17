@@ -43,7 +43,7 @@
   Hint: The syntax should be get_ret <- GET(url)
 
 - Class: video
-  Output: Let's check out the Wiki page to see what it looks like.
+  Output: Do you want to check out the Wiki page to see what it looks like?
   VideoLink: https://en.wikipedia.org/wiki/Hugh_Clapperton
   
 - Class: cmd_question
@@ -90,7 +90,8 @@
     For this we're going to use selector gadget.
 
 - Class: video
-  Output: Here is the rvest use of selector gadget to identify areas
+  Output: Do you want to read about the rvest use of selector gadget to 
+    identify areas?
   VideoLink: https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html
 
 - Class: cmd_question
@@ -137,3 +138,10 @@
 - Class: text
   Output: Now we see we have the first 2 paragraphs from this Wikipedia page.
 
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""

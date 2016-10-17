@@ -39,7 +39,7 @@
 - Class: mult_question
   Output: We are going to grab the tables from the webpage 
     (http://www.cdc.gov/vaccines/programs/vfc/awardees/vaccine-management/price-list/), 
-    how many should there be? (Look at th epage)
+    how many should there be? (Look at the page)
   AnswerChoices: 1;2;3;4
   CorrectAnswer: 4
   AnswerTests: omnitest(correctVal='4')
@@ -137,7 +137,7 @@
     xml_find_all and some xpath "//a[ contains(@href, 'hashtag')]".  
     Let's assign this to hash.
   CorrectAnswer: hash <- xml_find_all(tweet_text, "//a[ contains(@href, 'hashtag')]")
-  AnswerTests: omnitest(correctExpr='hash <- xml_find_all(tweet_text, "//a[ contains(@href, 'hashtag')]")')
+  AnswerTests: expr_creates_var('hash')
   Hint: hash <- xml_find_all(tweet_text, "//a[ contains(@href, 'hashtag')]")
   
 - Class: text
@@ -150,7 +150,7 @@
   Output: Let's try to find the paragraphs that have the class "tweet-text.
     Let's again use xml_find_all and try the xpath "//p[@class = 'tweet-text']".  
   CorrectAnswer: xml_find_all(tweet_text, "//p[@class = 'tweet-text']")
-  AnswerTests: omnitest(correctExpr='xml_find_all(tweet_text, "//p[@class = 'tweet-text']")')
+  AnswerTests: calculates_same_value('structure(list(), class = "xml_nodeset")')
   Hint: xml_find_all(tweet_text, "//p[@class = 'tweet-text']")
   
 - Class: text
@@ -173,3 +173,11 @@
     pretty much a language onto iself.  Selector gadget helps, but you may need to
     do many repeated calls to html_nodes or xml_nodes to get the output you want.
     Happy scraping!
+
+- Class: mult_question
+  Output: Would you like to submit the log of this lesson to Google Forms so
+    that your instructor may evaluate your progress?
+  AnswerChoices: Yes;No
+  CorrectAnswer: Yes
+  AnswerTests: submit_log()
+  Hint: ""
