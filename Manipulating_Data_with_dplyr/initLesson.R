@@ -26,3 +26,5 @@ path2csv <- file.path(.get_course_path(),
 cran <- tbl_df(read.csv(path2csv, stringsAsFactors = FALSE))
 cran2 <- select(cran, size:ip_id)
 cran3 <- select(cran, ip_id, package, size)
+
+swirl_options(swirl_logging = TRUE)
